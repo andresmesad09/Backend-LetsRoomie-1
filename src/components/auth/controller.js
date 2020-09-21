@@ -11,8 +11,39 @@ const fb = firebase.initializeApp({
     appId: "1:178671638304:web:9e5e6b1a0eba8f1dc7e945"
 })
 
+
 exports.addUser = (email, password) =>
 fb.auth().createUserWithEmailAndPassword(email, password);
 
 exports.authenticate = (email, password) =>
 fb.auth().signInWithEmailAndPassword(email, password);
+
+const store = require('./store');
+
+
+function addUser(name) {
+    return new Promise((resolve, reject) => {
+        if (!name) {
+            console.error('[userController] No hay nombre de usuario');
+            reject('Los datos son incorrectos');
+            return false;
+        }
+        const user = {
+            name
+        }
+    
+        store.add(user);
+        resolve(user);
+    })
+}
+
+function getUsers(filterUser) {
+    return new Promise((resolve, reject) => {
+        resolve(store.list(filterUser));
+    })
+}
+
+module.exports = {
+    addUser,
+    getUsers,
+}
