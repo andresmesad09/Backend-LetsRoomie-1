@@ -52,4 +52,16 @@ router.post("/signin", async (req, res) => {
   }
 });
 
+//Get users
+router.get('/users', function (req, res) {
+  const filterUsers = req.query.uid || null;
+  controller.getUsers(filterUsers)
+      .then((usersList) => {
+          response.success(req, res, usersList, 200);
+      })
+      .catch(e => {
+          response.error(req, res, 'Unexpected error', 500, e);
+      })
+})
+
 module.exports = router;
