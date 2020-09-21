@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const mySchema = new Schema({
+    _id: String,
     email: {
         type: String,
         required: true
@@ -15,8 +16,7 @@ const mySchema = new Schema({
         type: String,
         required: true
     }
-
-});
+}, { _id: false });
 
 //Le pasamos nombre de la collección, esquema
 const model = mongoose.model('User', mySchema);

@@ -2,6 +2,7 @@ const Model = require('./model');
 
 function addUser(user) {
     const myUser = new Model(user);
+    myUser._id = user._id;
     myUser.save();
 }
 

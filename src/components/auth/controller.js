@@ -1,5 +1,6 @@
 const firebase = require("firebase/app");
 require("firebase/auth");
+const store = require('./store');
 
 const fb = firebase.initializeApp({
     apiKey: "AIzaSyAtPmgaRv-KaiRtHHxxGdsWcNn0Uz_CDdg",
@@ -11,25 +12,30 @@ const fb = firebase.initializeApp({
     appId: "1:178671638304:web:9e5e6b1a0eba8f1dc7e945"
 })
 
+function createUser(email, password) {
+    fb.auth().createUserWithEmailAndPassword(email, password);
+}
 
-exports.addUser = (email, password) =>
-fb.auth().createUserWithEmailAndPassword(email, password);
-
-exports.authenticate = (email, password) =>
-fb.auth().signInWithEmailAndPassword(email, password);
-
-const store = require('./store');
-
-
-function addUser(name) {
+function authenticate(email, password) {
     return new Promise((resolve, reject) => {
-        if (!name) {
-            console.error('[userController] No hay nombre de usuario');
+        if (!email || !password) {
+            console.error('[userController] No hay usuario o password');
             reject('Los datos son incorrectos');
             return false;
         }
-        const user = {
-            name
+        const data = fb.auth().signInWithEmailAndPassword(email, password);
+        resolve(data);
+    })
+    
+}
+
+
+function addUser(user) {
+    return new Promise((resolve, reject) => {
+        if (!user) {
+            console.error('[userController] No hay usuario');
+            reject('Los datos son incorrectos');
+            return false;
         }
     
         store.add(user);
@@ -44,6 +50,8 @@ function getUsers(filterUser) {
 }
 
 module.exports = {
+    createUser,
+    authenticate,
     addUser,
     getUsers,
 }

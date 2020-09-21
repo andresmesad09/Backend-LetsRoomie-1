@@ -11,8 +11,7 @@ admin.initializeApp({
   databaseURL: "https://letsrommie2020.firebaseio.com/"
 });
 
-const db = admin.database();
-
+admin.firestore();
 
 //Create user
 router.post("/createUser", async (req, res) => {
@@ -25,7 +24,15 @@ router.post("/createUser", async (req, res) => {
       displayName: req.body.name,
       disabled: false,
     })
-    
+
+    const newUser = {
+      _id: newAuth["uid"],
+      email: req.body.email,
+      phone: req.body.phone,
+      name: req.body.name,
+    }
+
+    await controller.addUser(newUser);
     
     response.success(req, res, newAuth, 201);
     console.log('[create newUser]:', newAuth.email)
