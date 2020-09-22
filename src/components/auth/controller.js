@@ -10,7 +10,7 @@ const fb = firebase.initializeApp({
     projectId: config.fbProjectId,
     storageBucket: config.fbStorageBuscket,
     messagingSenderId: config.fbMessaginId,
-    appId: config.fbAppId
+    appId: config.fbAppId,
 })
 
 function createUser(email, password) {

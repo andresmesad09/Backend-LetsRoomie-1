@@ -3,11 +3,12 @@ const router = express.Router();
 const controller = require("./controller");
 const response = require('../../network/response');
 const admin = require('firebase-admin');
-const serviceAccountKey = require('../../../../serviceAccountKey.json')
+const serviceAccountKey = require('../../serviceKey');
 const config = require('../../config');
+require('dotenv').config();
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccountKey),
+  credential: admin.credential.cert(JSON.parse(serviceAccountKey)),
   databaseURL: config.dbUrl
 });
 
@@ -18,11 +19,9 @@ router.post("/createUser", async (req, res) => {
   try {
     const newAuth = await admin.auth().createUser({
       email: req.body.email,
-      emailVerified: true,
       phoneNumber: req.body.phone,
       password: req.body.password,
       displayName: req.body.name,
-      disabled: false,
     })
 
     const newUser = {
