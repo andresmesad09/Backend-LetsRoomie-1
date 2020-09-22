@@ -1,15 +1,16 @@
 const firebase = require("firebase/app");
 require("firebase/auth");
 const store = require('./store');
+const config = require('../../config');
 
 const fb = firebase.initializeApp({
-    apiKey: "AIzaSyAtPmgaRv-KaiRtHHxxGdsWcNn0Uz_CDdg",
-    authDomain: "letsrommie2020.firebaseapp.com",
-    databaseURL: "https://letsrommie2020.firebaseio.com",
-    projectId: "letsrommie2020",
-    storageBucket: "letsrommie2020.appspot.com",
-    messagingSenderId: "178671638304",
-    appId: "1:178671638304:web:9e5e6b1a0eba8f1dc7e945"
+    apiKey: config.fbApiKey,
+    authDomain: config.fbAuthDomain,
+    databaseURL: config.fbDbUrl,
+    projectId: config.fbProjectId,
+    storageBucket: config.fbStorageBuscket,
+    messagingSenderId: config.fbMessaginId,
+    appId: config.fbAppId
 })
 
 function createUser(email, password) {

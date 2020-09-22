@@ -3,12 +3,12 @@ const router = express.Router();
 const controller = require("./controller");
 const response = require('../../network/response');
 const admin = require('firebase-admin');
-
-const serviceAccount = require("../../../serviceAccountKey.json");
+const serviceAccountKey = require('../../../../serviceAccountKey.json')
+const config = require('../../config');
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://letsrommie2020.firebaseio.com/"
+  credential: admin.credential.cert(serviceAccountKey),
+  databaseURL: config.dbUrl
 });
 
 admin.firestore();
@@ -54,7 +54,7 @@ router.post("/signin", async (req, res) => {
 
 //Get users
 router.get('/users', function (req, res) {
-  const filterUsers = req.query.uid || null;
+  const filterUsers = req.query._id || null;
   controller.getUsers(filterUsers)
       .then((usersList) => {
           response.success(req, res, usersList, 200);
