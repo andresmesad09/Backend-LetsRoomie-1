@@ -20,5 +20,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(config.port, () => {
-  console.log(`Server listeng at ${config.host}:${config.port}`);
+  console.log(`Server listeng at port:${config.port}`);
 });
