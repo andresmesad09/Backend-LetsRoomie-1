@@ -13,22 +13,24 @@ const fb = firebase.initializeApp({
     appId: config.fbAppId,
 })
 
-function createUser(email, password) {
-    fb.auth().createUserWithEmailAndPassword(email, password);
+async function createUser(email, password) {
+    return fb.auth().createUserWithEmailAndPassword(email, password);
 }
 
-function authenticate(email, password) {
-    return new Promise((resolve, reject) => {
+async function authenticate(email, password) {
         if (!email || !password) {
             console.error('[userController] No hay usuario o password');
-            reject('Los datos son incorrectos');
-            return false;
+            throw new Error('Los datos son incorrectos');
+        } else {
+            try {
+                const data = await fb.auth().signInWithEmailAndPassword(email, password);
+                const user = data.user;
+                return userId
+            } catch(e) {
+                throw new Error('Wrong user or password');
+            }
         }
-        const data = fb.auth().signInWithEmailAndPassword(email, password);
-        resolve(data);
-    })
-    
-}
+    }
 
 
 function addUser(user) {
