@@ -3,11 +3,11 @@ const router = express.Router();
 const controller = require("./controller");
 const response = require('../../network/response');
 const admin = require('firebase-admin');
-const serviceAccountKey = require('../../../../serviceAccountKey.json')
+//const serviceAccountKey = require('../../../../serviceAccountKey.json')
 const config = require('../../config');
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccountKey),
+  credential: admin.credential.applicationDefault(),
   databaseURL: config.dbUrl
 });
 
