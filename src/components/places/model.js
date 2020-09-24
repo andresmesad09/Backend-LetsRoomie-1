@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-
 const { Schema } = mongoose;
+var Profile = mongoose.model('Profile')
 
 const place = new Schema({
     namePlace: { type: String, required: true },
@@ -17,7 +17,7 @@ const place = new Schema({
     closet: { type: String, required: true },
     size: { type: String, required: true },
     description: { type: String, required: true },
-    profile_id: { type: String, required: true },
+    profile: { type: Schema.ObjectId, ref: 'Profile', required: true },
 });
 
 //Le pasamos nombre de la collección, esquema
