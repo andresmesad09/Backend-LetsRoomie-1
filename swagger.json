@@ -1,0 +1,120 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Find your ideal room and your ideal mate. So, let´s rommie",
+    "version": "1.0.0",
+    "title": "API-LetsRommie"
+  },
+  "host": "localhost:3500",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "users",
+      "description": "Operations on the user"
+    },
+    {
+      "name": "profiles",
+      "description": "Operations on the profiles"
+    }
+  ],
+  "schemes": ["http"],
+  "paths": {
+    "/auth/users": {
+      "get": {
+        "tags": ["users"],
+        "summary": "List all the users",
+        "description": "List all the users created in our app. If you pass a query /auth/users?_id=user_id, it returns the info of the user_id",
+        "operationId": "getUsers",
+        "parameters": [
+          {
+            "name": "user_id",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "description": "uid returned in auth"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/auth/createUser": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Creates an user",
+        "description": "Creates an user in firebase and MongoDB",
+        "operationId": "createUser",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Usuario creado",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:pets": "modify pets in your account",
+        "read:pets": "read your pets"
+      }
+    },
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "ApiResponse": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "body": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Castor Dams",
+    "url": "https://www.platzi.com"
+  }
+}
