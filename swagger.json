@@ -1,11 +1,11 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "Find your ideal room and your ideal mate. So, let´s rommie",
+    "description": "Find your ideal room and your ideal mate. So, let´s roomie",
     "version": "1.0.0",
-    "title": "API-LetsRommie"
+    "title": "API-LetsRoomie"
   },
-  "host": "localhost:3500",
+  "host": "api-letsroomie.herokuapp.com",
   "basePath": "/",
   "tags": [
     {
@@ -17,11 +17,15 @@
       "description": "Operations on the profiles"
     }
   ],
-  "schemes": ["http"],
+  "schemes": [
+    "http"
+  ],
   "paths": {
     "/auth/users": {
       "get": {
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "List all the users",
         "description": "List all the users created in our app. If you pass a query /auth/users?_id=user_id, it returns the info of the user_id",
         "operationId": "getUsers",
@@ -35,19 +39,29 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "successful operation"
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Error creating user"
           }
         }
       }
     },
     "/auth/createUser": {
       "post": {
-        "tags": ["users"],
+        "tags": [
+          "users"
+        ],
         "summary": "Creates an user",
         "description": "Creates an user in firebase and MongoDB",
         "operationId": "createUser",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -55,13 +69,19 @@
             "description": "Usuario creado",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/createUser"
             }
           }
         ],
         "responses": {
-          "default": {
-            "description": "successful operation"
+          "201": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Error creating user"
           }
         }
       }
@@ -87,13 +107,44 @@
     "User": {
       "type": "object",
       "properties": {
-        "_id": {
+        "error": {
           "type": "string"
         },
+        "body": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "__v": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "createUser": {
+      "type": "object",
+      "properties": {
         "email": {
           "type": "string"
         },
         "phone": {
+          "type": "string"
+        },
+        "password": {
           "type": "string"
         },
         "name": {

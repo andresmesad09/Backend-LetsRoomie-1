@@ -20,7 +20,7 @@ router.post("/createUser", async (req, res) => {
     response.success(req, res, user, 201);
     console.log('[create newUser]:', user.email)
   } catch (e) {
-    response.error(req, res, 'Error creating newUser', 401, e.message)
+    response.error(req, res, 'Error creating newUser', 400, e.message)
   }
 });
 
