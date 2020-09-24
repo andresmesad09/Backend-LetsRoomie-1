@@ -34,7 +34,7 @@ router.post("/createUser", async (req, res) => {
 
     await controller.addUser(newUser);
     
-    response.success(req, res, newAuth, 201);
+    response.success(req, res, newAuth , 201);
     console.log('[create newUser]:', newAuth.email)
   } catch (e) {
     response.error(req, res, 'Error creating newUser', 401, e.message)
