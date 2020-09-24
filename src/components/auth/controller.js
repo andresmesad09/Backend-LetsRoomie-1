@@ -25,9 +25,9 @@ async function authenticate(email, password) {
             try {
                 const data = await fb.auth().signInWithEmailAndPassword(email, password);
                 const user = data.user;
-                return userId
+                return user
             } catch(e) {
-                throw new Error('Wrong user or password');
+                throw new Error(e);
             }
         }
     }
