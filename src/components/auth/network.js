@@ -26,7 +26,7 @@ router.post("/createUser", async (req, res) => {
     })
 
     const newUser = {
-      _id: newAuth["uid"],
+      uid: newAuth["uid"],
       email: req.body.email,
       phone: req.body.phone,
       name: req.body.name,
