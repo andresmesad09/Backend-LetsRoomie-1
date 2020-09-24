@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 router(app);
 
 app.get("/", (req, res) => {
-  res.send("Hola");
+  res.send("It´s alive!!!");
 });
 
 app.listen(config.port, () => {
