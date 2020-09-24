@@ -18,14 +18,16 @@ placeController.addPlace = async (req, res, next) => {
             cleaning: req.body.cleaning,
             closet: req.body.closet,
             size: req.body.size,
-            description: req.body.decription,
-            profile_id: req.body.profile_id,
+            description: req.body.description,
+            profile: req.body.profile,
         })
         await place.save()
         res.json({
           status: 201,
           body: place
         })
+        
+        
       } catch (error) {
         next(error)
       }

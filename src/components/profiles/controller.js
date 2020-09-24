@@ -8,8 +8,7 @@ profileController.addProfile = async (req, res, next) => {
           avatar: req.body.avatar,
           isHost: req.body.isHost,
           about: req.body.about,
-          user_id: req.body.user_id,
-          places: req.body.places,
+          user: req.body.user,
           favorites: req.body.favorites,
         })
         await profile.save()

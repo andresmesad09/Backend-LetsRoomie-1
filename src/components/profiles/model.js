@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
-
+var User = mongoose.model('User')
 const { Schema } = mongoose;
 
 const profile = new Schema({
     avatar: { type: String, required: true },
     isHost: { type: Boolean, required: true },
     about: { type: String, required: false },
-    user_id: { type: String, required: true },
-    places: { type: Array, required: false },
+    user: { type: String ,required: true },// este user deberia ir con OBJectID pero el modulo User esta sin configuracion adecuada
     favorites: { type: String, required: false}
 });
 
