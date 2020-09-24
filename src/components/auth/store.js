@@ -2,8 +2,8 @@ const Model = require('./model');
 
 function addUser(user) {
     const myUser = new Model(user);
-    myUser._id = user._id;
     myUser.save();
+    return myUser
 }
 
 async function listUsers(filterUser) {
@@ -15,7 +15,17 @@ async function listUsers(filterUser) {
     return users
 }
 
+async function getAuthUser(filterUid) {
+    let filter = {};
+    if (filterUid !== null) {
+        filter = {uid: filterUid}
+    }
+    const users = await Model.find(filter);
+    return users
+}
+
 module.exports = {
     add: addUser,
-    list: listUsers
+    list: listUsers,
+    getAuth: getAuthUser
 }

@@ -24,7 +24,8 @@ async function authenticate(email, password) {
         } else {
             try {
                 const data = await fb.auth().signInWithEmailAndPassword(email, password);
-                const user = data.user;
+                const userId = data.user;
+                const user = await store.getAuth(userId.uid)
                 return user
             } catch(e) {
                 throw new Error(e);
@@ -41,8 +42,8 @@ function addUser(user) {
             return false;
         }
     
-        store.add(user);
-        resolve(user);
+        const newUser = store.add(user);
+        resolve(newUser);
     })
 }
 

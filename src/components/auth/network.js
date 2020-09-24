@@ -9,7 +9,7 @@ router.post("/createUser", async (req, res) => {
     const newAuth = await controller.createUser(req.body.email, req.body.password);
 
     const newUser = {
-      _id: newAuth.user.uid,
+      uid: newAuth.user.uid,
       email: req.body.email,
       phone: req.body.phone,
       name: req.body.name,
