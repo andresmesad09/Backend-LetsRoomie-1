@@ -24,8 +24,21 @@ async function getAuthUser(filterUid) {
     return users
 }
 
+async function deleteUser(id) {
+    const data = await Model.findByIdAndDelete(id)
+    return data
+}
+
+async function updateUser(id, data) {
+    await Model.findByIdAndUpdate(id, data);
+    const updatedUser = listUsers(id);
+    return updatedUser
+}
+
 module.exports = {
     add: addUser,
     list: listUsers,
-    getAuth: getAuthUser
+    delete: deleteUser,
+    getAuth: getAuthUser,
+    update: updateUser
 }

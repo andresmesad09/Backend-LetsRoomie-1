@@ -53,9 +53,34 @@ function getUsers(filterUser) {
     })
 }
 
+function deleteUser(id) {
+    return new Promise((resolve, reject) => {
+        if (!id) {
+            console.log('[User controller] No id to eliminate');
+            reject('Missing id');
+            return false;
+        }
+
+        resolve(store.delete(id));
+    })
+}
+
+function updateUser(id, data) {
+    return new Promise((resolve, reject) => {
+        if (!id || !data) {
+            console.log('[User controller] no data to update');
+            reject('No data or id to update');
+        }
+
+        resolve(store.update(id, data))
+    })
+}
+
 module.exports = {
     createUser,
     authenticate,
     addUser,
     getUsers,
+    deleteUser,
+    updateUser
 }

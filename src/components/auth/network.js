@@ -57,4 +57,33 @@ router.get('/current-user', function (req, res) {
       .catch(error => response.error(req, res, "Error getting the current user", 500, error))
 })
 
+// Delete a user
+router.delete('/:id', function (req, res) {
+  const userId = req.params.id;
+  controller.deleteUser(userId)
+    .then(data => {
+      if (!data) {
+        response.error(req, res, "User doesn't exist", 403, "User id doesn't exist in MongoDB");
+      } else {
+        response.success(req, res, { status: "eliminated", data: data }, 200);
+      }
+    })
+    .catch(e => {
+      response.error(req, res, "Error deleting that user", 500, e);
+    })
+})
+
+//update a user
+router.put('/:id', function (req, res) {
+  const userId = req.params.id;
+  controller.updateUser(userId, req.body)
+    .then(data => {
+      response.success(req, res, data, 200);
+    })
+    .catch(e => {
+      response.error(req, res, "Error updating user", 500, e.message)
+    })
+
+})
+
 module.exports = router;
