@@ -9,7 +9,6 @@ profileController.addProfile = async (req, res, next) => {
           isHost: req.body.isHost,
           about: req.body.about,
           user: req.body.user,
-          favorites: req.body.favorites,
         })
         await profile.save()
         res.json({
