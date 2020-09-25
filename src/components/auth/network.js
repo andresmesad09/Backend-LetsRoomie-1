@@ -2,42 +2,25 @@ const express = require("express");
 const router = express.Router();
 const controller = require("./controller");
 const response = require('../../network/response');
-const admin = require('firebase-admin');
-//const serviceAccountKey = require('../../../../serviceAccountKey.json')
-const config = require('../../config');
-
-admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
-  databaseURL: config.dbUrl
-});
-
-admin.firestore();
 
 //Create user
 router.post("/createUser", async (req, res) => {
   try {
-    const newAuth = await admin.auth().createUser({
-      email: req.body.email,
-      emailVerified: true,
-      phoneNumber: req.body.phone,
-      password: req.body.password,
-      displayName: req.body.name,
-      disabled: false,
-    })
+    const newAuth = await controller.createUser(req.body.email, req.body.password);
 
     const newUser = {
-      uid: newAuth["uid"],
+      uid: newAuth.user.uid,
       email: req.body.email,
       phone: req.body.phone,
       name: req.body.name,
     }
 
-    await controller.addUser(newUser);
+    const user = await controller.addUser(newUser);
     
-    response.success(req, res, newAuth , 201);
-    console.log('[create newUser]:', newAuth.email)
+    response.success(req, res, user, 201);
+    console.log('[create newUser]:', user.email)
   } catch (e) {
-    response.error(req, res, 'Error creating newUser', 401, e.message)
+    response.error(req, res, 'Error creating newUser', 400, e.message)
   }
 });
 
@@ -46,9 +29,9 @@ router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await controller.authenticate(email, password);
-    res.json(user);
+    response.success(req, res, user, 200)
   } catch (err) {
-    res.status(401).json({ error: err.message });
+    response.error(req, res, "Auth Error", 500, err.message);
   }
 });
 
@@ -62,6 +45,45 @@ router.get('/users', function (req, res) {
       .catch(e => {
           response.error(req, res, 'Unexpected error', 500, e);
       })
+})
+
+// Get current user
+router.get('/current-user', function (req, res) {
+  const userId = req.body._id || null;
+  controller.getUsers(userId)
+      .then(user => {
+          response.success(req, res, user, 200)
+      })
+      .catch(error => response.error(req, res, "Error getting the current user", 500, error))
+})
+
+// Delete a user
+router.delete('/:id', function (req, res) {
+  const userId = req.params.id;
+  controller.deleteUser(userId)
+    .then(data => {
+      if (!data) {
+        response.error(req, res, "User doesn't exist", 403, "User id doesn't exist in MongoDB");
+      } else {
+        response.success(req, res, { status: "eliminated", data: data }, 200);
+      }
+    })
+    .catch(e => {
+      response.error(req, res, "Error deleting that user", 500, e);
+    })
+})
+
+//update a user
+router.put('/:id', function (req, res) {
+  const userId = req.params.id;
+  controller.updateUser(userId, req.body)
+    .then(data => {
+      response.success(req, res, data, 200);
+    })
+    .catch(e => {
+      response.error(req, res, "Error updating user", 500, e.message)
+    })
+
 })
 
 module.exports = router;

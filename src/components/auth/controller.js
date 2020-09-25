@@ -10,25 +10,28 @@ const fb = firebase.initializeApp({
     projectId: config.fbProjectId,
     storageBucket: config.fbStorageBuscket,
     messagingSenderId: config.fbMessaginId,
-    appId: config.fbAppId
+    appId: config.fbAppId,
 })
 
-function createUser(email, password) {
-    fb.auth().createUserWithEmailAndPassword(email, password);
+async function createUser(email, password) {
+    return fb.auth().createUserWithEmailAndPassword(email, password);
 }
 
-function authenticate(email, password) {
-    return new Promise((resolve, reject) => {
+async function authenticate(email, password) {
         if (!email || !password) {
             console.error('[userController] No hay usuario o password');
-            reject('Los datos son incorrectos');
-            return false;
+            throw new Error('Los datos son incorrectos');
+        } else {
+            try {
+                const data = await fb.auth().signInWithEmailAndPassword(email, password);
+                const userId = data.user;
+                const user = await store.getAuth(userId.uid)
+                return user
+            } catch(e) {
+                throw new Error(e);
+            }
         }
-        const data = fb.auth().signInWithEmailAndPassword(email, password);
-        resolve(data);
-    })
-    
-}
+    }
 
 
 function addUser(user) {
@@ -39,8 +42,8 @@ function addUser(user) {
             return false;
         }
     
-        store.add(user);
-        resolve(user);
+        const newUser = store.add(user);
+        resolve(newUser);
     })
 }
 
@@ -50,9 +53,34 @@ function getUsers(filterUser) {
     })
 }
 
+function deleteUser(id) {
+    return new Promise((resolve, reject) => {
+        if (!id) {
+            console.log('[User controller] No id to eliminate');
+            reject('Missing id');
+            return false;
+        }
+
+        resolve(store.delete(id));
+    })
+}
+
+function updateUser(id, data) {
+    return new Promise((resolve, reject) => {
+        if (!id || !data) {
+            console.log('[User controller] no data to update');
+            reject('No data or id to update');
+        }
+
+        resolve(store.update(id, data))
+    })
+}
+
 module.exports = {
     createUser,
     authenticate,
     addUser,
     getUsers,
+    deleteUser,
+    updateUser
 }
