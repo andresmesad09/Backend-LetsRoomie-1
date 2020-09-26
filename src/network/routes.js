@@ -1,7 +1,7 @@
 const auth = require('../components/auth/network');
 const profile = require('../components/profiles/network');
 const place = require('../components/places/network');
-const upload = require('../services/network');
+const upload = require('../services/aws-upload');
 const favorites = require('../components/favorites/network');
 
 const swaggerUi = require('swagger-ui-express');
