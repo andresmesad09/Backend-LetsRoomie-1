@@ -4,6 +4,7 @@ const multerS3 = require('multer-s3');
 const multer = require('multer');
 const path = require('path');
 const config = require('../config');
+const response = require('../network/response');
 /**
  * express.Router() creates modular, mountable route handlers
  * A Router instance is a complete middleware and routing system; for this reason, it is often referred to as a “mini-app”.
@@ -115,7 +116,7 @@ const uploadsBusinessGallery = multer({
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
   },
-}).array('galleryImage', 4);
+}).array('galleryImage', 10);
 /**
  * @route POST /api/profile/business-gallery-upload
  * @desc Upload business Gallery images
@@ -123,7 +124,7 @@ const uploadsBusinessGallery = multer({
  */
 router.post('/multiple-file-upload', (req, res) => {
   uploadsBusinessGallery(req, res, (error) => {
-    console.log('files', req.files);
+    // console.log('files', req.files);
     if (error) {
       console.log('errors', error);
       res.json({error: error});
@@ -139,14 +140,16 @@ router.post('/multiple-file-upload', (req, res) => {
         const galleryImgLocationArray = [];
         for (let i = 0; i < fileArray.length; i++) {
           fileLocation = fileArray[i].location;
-          console.log('filenm', fileLocation);
+          // console.log('filenm', fileLocation);
           galleryImgLocationArray.push(fileLocation);
         }
         // Save the file name into database
-        res.json({
-          filesArray: fileArray,
-          locationArray: galleryImgLocationArray,
-        });
+        // res.json({
+        //   // filesArray: fileArray,
+        //   locationArray: galleryImgLocationArray
+        // });
+        console.log('[AWS] locations:' + galleryImgLocationArray)
+        response.success(req, res, galleryImgLocationArray, 201);
       }
     }
   });
