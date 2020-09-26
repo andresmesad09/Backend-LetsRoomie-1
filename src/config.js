@@ -10,5 +10,7 @@ module.exports = {
   fbProjectId: process.env.FB_PROJECT_ID,
   fbStorageBuscket: process.env.FB_STORAGE_BUCKET,
   fbMessaginId: process.env.FB_MESSAGIN_ID,
-  fbAppId: process.env.FB_APP_ID
+  fbAppId: process.env.FB_APP_ID,
+  awsAccessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  awsSecretKey: process.env.AWS_SECRET_KEY
 };
