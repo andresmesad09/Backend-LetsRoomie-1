@@ -113,3 +113,6 @@ dist
 # End of https://www.toptal.com/developers/gitignore/api/node
 
 serviceAccountKey.json
+
+#test-user
+usuario_prueba.txt
