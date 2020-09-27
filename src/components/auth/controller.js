@@ -13,6 +13,7 @@ const fb = firebase.initializeApp({
     appId: config.fbAppId,
 })
 
+
 async function createUser(email, password) {
     return fb.auth().createUserWithEmailAndPassword(email, password);
 }
