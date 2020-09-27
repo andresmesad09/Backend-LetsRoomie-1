@@ -122,7 +122,7 @@ const uploadsBusinessGallery = multer({
  * @desc Upload business Gallery images
  * @access public
  */
-router.post('/multiple-file-upload', (req, res) => {
+router.post('/multipleUpload', (req, res) => {
   uploadsBusinessGallery(req, res, (error) => {
     // console.log('files', req.files);
     if (error) {

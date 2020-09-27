@@ -15,6 +15,18 @@
     {
       "name": "profiles",
       "description": "Operations on the profiles"
+    },
+    {
+      "name": "uploadImages",
+      "description": "Operations to upload Images"
+    },
+    {
+      "name": "places",
+      "description": "Operations on places"
+    },
+    {
+      "name": "favorites",
+      "description": "Operations on favorites"
     }
   ],
   "schemes": [
@@ -66,7 +78,6 @@
           {
             "in": "body",
             "name": "body",
-            "description": "Usuario creado",
             "required": true,
             "schema": {
               "$ref": "#/definitions/createUser"
@@ -81,7 +92,129 @@
             }
           },
           "400": {
-            "description": "Error creating user"
+            "description": "Error creating new user"
+          }
+        }
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Login a user",
+        "description": "Log a user with firebase and obtain user object from MongoDB",
+        "operationId": "authUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/authUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/userAuthenticated"
+            }
+          },
+          "500": {
+            "description": "Auth Error"
+          }
+        }
+      }
+    },
+    "/auth/{userId}": {
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Update phone number or name from a user",
+        "operationId": "getUserById",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "Id of user to update",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfull operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "500": {
+            "description": "Error updating user"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Deletes a user ",
+        "operationId": "deleteUserById",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "Id of user to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfull operation",
+            "schema": {
+              "$ref": "#/definitions/userDeleted"
+            }
+          },
+          "500": {
+            "description": "Error updating user"
+          }
+        }
+      }
+    },
+    "/api/profile/multipleUpload": {
+      "post": {
+        "tags": [
+          "uploadImages"
+        ],
+        "summary": "Update up to 10 photos of the profile",
+        "operationId": "uploadPhotos",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "galleryImage",
+            "in": "formData",
+            "description": "file to upload un format jpg/png",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "successfull operation",
+            "schema": {
+              "$ref": "#/definitions/uploadImages"
+            }
+          },
+          "500": {
+            "description": "Error updating user"
           }
         }
       }
@@ -127,9 +260,6 @@
             },
             "name": {
               "type": "string"
-            },
-            "__v": {
-              "type": "integer"
             }
           }
         }
@@ -149,6 +279,98 @@
         },
         "name": {
           "type": "string"
+        }
+      }
+    },
+    "userAuthenticated": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "__v": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "authUser": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "userDeleted": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string"
+            },
+            "_id": {
+              "type": "string"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "__v": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "uploadImages": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "body": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 2,
+          "maxItems": 10
         }
       }
     },
