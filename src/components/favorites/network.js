@@ -1,11 +1,12 @@
 const express = require('express')
 const router = express.Router()
 const favorite = require('./controller')
+const auth =  require('../middleware/auth')
 
-router.get('/fav', favorite.getFavorites)
-router.post('/fav', favorite.addFavorite)
-router.get('/fav/:id', favorite.getOneFavorite)
-router.patch('/fav/:id',favorite.updateFavorite)
-router.delete('/fav/:id',favorite.deleteFavorite)
+router.get('/fav', auth, favorite.getFavorites)
+router.post('/fav', auth, favorite.addFavorite)
+router.get('/fav/:id', auth, favorite.getOneFavorite)
+router.patch('/fav/:id', auth, favorite.updateFavorite)
+router.delete('/fav/:id', auth, favorite.deleteFavorite)
 
 module.exports = router

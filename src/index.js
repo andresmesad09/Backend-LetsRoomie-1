@@ -1,5 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
+const jwt = require("jsonwebtoken")
 
 const db = require('./components/db/db');
 
@@ -8,10 +9,13 @@ const router = require("./network/routes");
 
 const app = express();
 
+
 db(config.dbUrl);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+
 
 router(app);
 
