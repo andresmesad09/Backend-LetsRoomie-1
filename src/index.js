@@ -6,8 +6,11 @@ const db = require('./components/db/db');
 
 const config = require("./config");
 const router = require("./network/routes");
+const cors = require('cors')
 
 const app = express();
+
+app.use(cors());
 
 
 db(config.dbUrl);
