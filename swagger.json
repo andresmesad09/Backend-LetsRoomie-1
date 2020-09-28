@@ -192,7 +192,7 @@
         "tags": [
           "uploadImages"
         ],
-        "summary": "Update up to 10 photos of the profile",
+        "summary": "Update up to 8 photos of the profile",
         "operationId": "uploadPhotos",
         "consumes": [
           "multipart/form-data"
@@ -211,6 +211,38 @@
             "description": "successfull operation",
             "schema": {
               "$ref": "#/definitions/uploadImages"
+            }
+          },
+          "500": {
+            "description": "Error updating user"
+          }
+        }
+      }
+    },
+    "/api/profile/avatarUpload": {
+      "post": {
+        "tags": [
+          "uploadImages"
+        ],
+        "summary": "Upload the avatar picture",
+        "operationId": "avatarUpload",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "description": "file to upload un format jpg/png",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "successfull operation",
+            "schema": {
+              "$ref": "#/definitions/uploadAvatar"
             }
           },
           "500": {
@@ -285,29 +317,37 @@
     "userAuthenticated": {
       "type": "object",
       "properties": {
-        "error": {
-          "type": "string"
+        "status": {
+          "type": "integer"
         },
         "body": {
           "type": "object",
           "properties": {
-            "_id": {
-              "type": "string"
+            "user": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "uid": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "__v": {
+                  "type": "integer"
+                }
+              }
             },
-            "uid": {
+            "token": {
               "type": "string"
-            },
-            "email": {
-              "type": "string"
-            },
-            "phone": {
-              "type": "string"
-            },
-            "name": {
-              "type": "string"
-            },
-            "__v": {
-              "type": "integer"
             }
           }
         }
@@ -374,6 +414,22 @@
         }
       }
     },
+    "uploadAvatar": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "location": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "ApiResponse": {
       "type": "object",
       "properties": {
@@ -387,7 +443,7 @@
     }
   },
   "externalDocs": {
-    "description": "Find out more about Castor Dams",
+    "description": "Find out more about Castor Dams. Email us: castordams@gmail.com",
     "url": "https://www.platzi.com"
   }
 }

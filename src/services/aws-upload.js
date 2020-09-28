@@ -62,31 +62,26 @@ function checkFileType(file, cb) {
   }
 }
 /**
- * @route POST api/profile/business-img-upload
+ * @route POST api/profile/avatarUpload
  * @desc Upload post image
  * @access public
  */
-router.post('/profile-img-upload', (req, res) => {
+router.post('/avatarUpload', (req, res) => {
   profileImgUpload(req, res, (error) => {
-    // console.log( 'requestOkokok', req.file );
-    // console.log( 'error', error );
     if (error) {
       console.log('errors', error);
       res.json({error: error});
     } else {
       // If File not found
       if (req.file === undefined) {
-        console.log('Error: No File Selected!');
-        res.json('Error: No File Selected');
+        const details = 'No File Selected!'
+        response.error(req, res, "No file selected", 500, details)
       } else {
         // If Success
         const imageName = req.file.originalname;
         const imageLocation = req.file.location;
-        // Save the file name into database into profile model
-        res.json({
-          image: imageName,
-          location: imageLocation,
-        });
+        console.log(`[AWS service]: image ${imageName} created in the s3 bucket`)
+        response.success(req, res, {location: imageLocation}, 201);
       }
     }
   });
@@ -96,7 +91,7 @@ router.post('/profile-img-upload', (req, res) => {
  * BUSINESS GALLERY IMAGES
  * MULTIPLE FILE UPLOADS
  */
-// Multiple File Uploads ( max 4 )
+// Multiple File Uploads ( max 8 )
 const uploadsBusinessGallery = multer({
   storage: multerS3({
     s3: s3,
@@ -116,7 +111,7 @@ const uploadsBusinessGallery = multer({
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
   },
-}).array('galleryImage', 10);
+}).array('galleryImage', 8);
 /**
  * @route POST /api/profile/business-gallery-upload
  * @desc Upload business Gallery images
