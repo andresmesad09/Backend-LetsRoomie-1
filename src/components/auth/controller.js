@@ -33,6 +33,14 @@ async function authenticate(email, password) {
             }
         }
     }
+    async function logout() {
+        try {
+            const data = await fb.auth().signOut();
+        } catch(e) {
+            throw new Error(e);
+        }
+    }
+    
 
 
 function addUser(user) {
@@ -83,5 +91,6 @@ module.exports = {
     addUser,
     getUsers,
     deleteUser,
-    updateUser
+    updateUser,
+    logout
 }

@@ -51,6 +51,12 @@ router.post('/signin', async (req, res) => {
   }
 });
 
+router.post('/signout', async (req,res) =>{
+  console.log('entre aca')
+  controller.logout
+  res.json('Logout')
+})
+
 //Get users
 router.get('/users', function (req, res) {
   const filterUsers = req.query._id || null;
