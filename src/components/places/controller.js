@@ -13,6 +13,20 @@ placeController.getPlaces= async (req, res, next) => {
   }
 }
 
+placeController.getPlacesAvalaible= async (req, res, next) => {
+  try {
+    const places = await Place.find({avalaible:true}).populate('profile')
+        res.json({
+          status: 200,
+          body: places
+        }) 
+    }catch (error) {
+    next(error)
+  }
+}
+
+
+
 placeController.getOnePlace = async (req, res,next) =>{
   try {
     const place = await Place.findById(req.params.id)
@@ -24,12 +38,25 @@ placeController.getOnePlace = async (req, res,next) =>{
     next(error)
   }
 }
+placeController.getOnePlaceCity = async (req, res,next) =>{
+  try {
+    const place = await Place.find({city:req.params.city})
+    res.json({
+      status:200,
+      body:place
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 
 placeController.addPlace = async (req, res, next) => {
     try {
         const place = new Place({
             namePlace: req.body.namePlace,
             location: req.body.location,
+            city: req.body.city,
             images: req.body.images,
             price: req.body.price,
             avalaible: req.body.avalaible,
@@ -61,6 +88,7 @@ placeController.updatePlace = async(req, res, next) => {
     const place = {
       namePlace: req.body.namePlace,
       location: req.body.location,
+      city: req.body.city,
       images: req.body.images,
       price: req.body.price,
       avalaible: req.body.avalaible,

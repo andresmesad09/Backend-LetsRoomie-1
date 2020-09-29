@@ -8,6 +8,9 @@ const mySchema = new Schema({
     place:  { type: Schema.ObjectId ,ref: 'Place',required: true },
     user: { type: Schema.ObjectId ,ref: 'User',required: true }
     
+},
+{
+    timestamps: true
 });
 
 //Le pasamos nombre de la collección, esquema
