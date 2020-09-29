@@ -4,8 +4,23 @@ const response = require('../../network/response');
 
 profileController.getProfiles = async (req, res, next) => {
   try {
-    const profiles = await Profile.find();
-    response.success(req, res, profiles, 200);
+    const profiles = await Profile.find().populate('user')
+    res.json({
+      status: 200,
+      body: profiles
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+profileController.getProfilesIsHost= async (req, res, next) => {
+  try {
+    const profiles = await Profile.find({isHost:true}).populate('user')
+    res.json({
+      status: 200,
+      body: profiles
+    })
   } catch (error) {
     next(error);
   }
@@ -13,8 +28,11 @@ profileController.getProfiles = async (req, res, next) => {
 
 profileController.getOneProfile = async (req, res, next) => {
   try {
-    const profile = await Profile.findById(req.params.id);
-    response.success(req, res, profile, 200);
+    const profile = await Profile.findById(req.params.id).populate('user')
+    res.json({
+      status:200,
+      body:profile
+    })
   } catch (error) {
     next(error);
   }
@@ -62,10 +80,6 @@ profileController.updateProfile = async (req, res, next) => {
 profileController.deleteProfile = async (req, res, next) => {
   try {
     const data = await Profile.findByIdAndRemove(req.params.id);
-    // res.json({
-    //   status: 200,
-    //   message: `Profile ${req.params.id} deleted`,
-    // });
     response.success(req, res, data, 200);
   } catch (error) {
     next(error);

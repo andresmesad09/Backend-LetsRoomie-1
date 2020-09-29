@@ -39,7 +39,7 @@ router.post('/signin', async (req, res) => {
       check: true,
     };
     const token = jwt.sign(payload, config.llave, {
-      expiresIn: 1440,
+      expiresIn: 10000,
     });
     res.json({
       status: 200,
@@ -50,6 +50,12 @@ router.post('/signin', async (req, res) => {
     response.error(req, res, 'Auth Error', 500, err.message);
   }
 });
+
+router.post('/signout', async (req,res) =>{
+  console.log('entre aca')
+  controller.logout
+  res.json('Logout')
+})
 
 //Get users
 router.get('/users', function (req, res) {
