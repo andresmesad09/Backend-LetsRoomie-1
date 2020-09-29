@@ -3,7 +3,7 @@ const profileController = {};
 
 profileController.getProfiles= async (req, res, next) => {
   try {
-    const profiles = await Profile.find()//.populate('user')
+    const profiles = await Profile.find().populate('user')
     res.json({
       status: 200,
       body: profiles
@@ -15,7 +15,7 @@ profileController.getProfiles= async (req, res, next) => {
 
 profileController.getOneProfile = async (req, res,next) =>{
   try {
-    const profile = await Profile.findById(req.params.id)
+    const profile = await Profile.findById(req.params.id).populate('user')
     res.json({
       status:200,
       body:profile

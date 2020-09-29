@@ -39,7 +39,7 @@ router.post('/signin', async (req, res) => {
       check: true,
     };
     const token = jwt.sign(payload, config.llave, {
-      expiresIn: 1440,
+      expiresIn: 10000,
     });
     res.json({
       status: 200,

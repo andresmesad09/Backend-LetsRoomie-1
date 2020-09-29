@@ -5,6 +5,7 @@ var Profile = mongoose.model('Profile')
 const place = new Schema({
     namePlace: { type: String, required: true },
     location: { type: String, required: true },
+    city: { type: String, required: true },
     images: { type: Array, required: false },
     price: { type: Number, required: true },
     avalaible: { type: Boolean, required: true },
@@ -18,8 +19,10 @@ const place = new Schema({
     size: { type: Number, required: true },
     description: { type: String, required: true },
     profile: { type: Schema.ObjectId, ref: 'Profile', required: true },
+},
+{
+    timestamps: true
 });
-
 //Le pasamos nombre de la collección, esquema
 
 module.exports = mongoose.model('Place', place);
