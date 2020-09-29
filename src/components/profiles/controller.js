@@ -13,6 +13,18 @@ profileController.getProfiles= async (req, res, next) => {
   }
 }
 
+profileController.getProfilesIsHost= async (req, res, next) => {
+  try {
+    const profiles = await Profile.find({isHost:true}).populate('user')
+    res.json({
+      status: 200,
+      body: profiles
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 profileController.getOneProfile = async (req, res,next) =>{
   try {
     const profile = await Profile.findById(req.params.id).populate('user')
