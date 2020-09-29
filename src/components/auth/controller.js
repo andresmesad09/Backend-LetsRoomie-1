@@ -54,6 +54,12 @@ function getUsers(filterUser) {
     })
 }
 
+function getUsersByEmail(filterUser) {
+    return new Promise((resolve, reject) => {
+        resolve(store.listUsersByEmail(filterUser));
+    })
+}
+
 function deleteUser(id) {
     return new Promise((resolve, reject) => {
         if (!id) {
@@ -61,7 +67,6 @@ function deleteUser(id) {
             reject('Missing id');
             return false;
         }
-
         resolve(store.delete(id));
     })
 }
@@ -83,5 +88,6 @@ module.exports = {
     addUser,
     getUsers,
     deleteUser,
-    updateUser
+    updateUser,
+    getUsersByEmail
 }

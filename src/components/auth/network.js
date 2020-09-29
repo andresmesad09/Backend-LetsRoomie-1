@@ -113,4 +113,48 @@ router.put('/:id', function (req, res) {
     });
 });
 
+//Get user by email
+router.get('/userByEmail', function (req, res) {
+  const filterUsers = req.query.email|| null;
+  controller
+    .getUsersByEmail(filterUsers)
+    .then((usersList) => {
+      response.success(req, res, usersList, 200);
+    })
+    .catch((e) => {
+      response.error(req, res, 'Unexpected error', 500, e);
+    });
+});
+
+//Send Whatsapp to a user
+router.get('/contact-wapp', function(req, res) {
+  const userId = req.query._id;
+  controller.getUsers(userId)
+    .then(user => {
+      const phoneNumber = user[0].phone.replace(' ', '');
+      const message = 'I´m interested in be your roomie.'
+      url = `wa.me/${phoneNumber}?text=${message}`
+      response.success(req, res, url, 200);
+    })
+    .catch(e => {
+      response.error(req, res, e.message, 400, e);
+    })
+})
+
+//Send Mail to a user
+router.get('/contact-mail', function(req, res) {
+  const userId = req.query._id;
+  controller.getUsers(userId)
+    .then(user => {
+      const emailAdress = user[0].email;
+      const subject = "Lets Rommie"
+      const message = 'I´m interested in be your roomie.'
+      url = `mailto:${emailAdress}?subject=${subject}&body=${message}`
+      response.success(req, res, url, 200);
+    })
+    .catch(e => {
+      response.error(req, res, e.message, 400, e);
+    })
+})
+
 module.exports = router;

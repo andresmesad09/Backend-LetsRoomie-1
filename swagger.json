@@ -30,7 +30,7 @@
     }
   ],
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/auth/users": {
@@ -187,6 +187,66 @@
         }
       }
     },
+    "/auth/contact-wapp": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Get the link to contact through whatsapp",
+        "description": "Get the link to contact the host passing the host id in the query.",
+        "operationId": "getWhatsAppLink",
+        "parameters": [
+          {
+            "name": "_id",
+            "type": "string",
+            "in": "query",
+            "required": true,
+            "description": "hostId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Whatsapp"
+            }
+          },
+          "400": {
+            "description": "Error creating the link"
+          }
+        }
+      }
+    },
+    "/auth/contact-mail": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Get the link to contact through Mail",
+        "description": "Get the link to contact the host passing the host id in the query.",
+        "operationId": "getMailLink",
+        "parameters": [
+          {
+            "name": "_id",
+            "type": "string",
+            "in": "query",
+            "required": true,
+            "description": "hostId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/MailTo"
+            }
+          },
+          "400": {
+            "description": "Error creating the link"
+          }
+        }
+      }
+    },
     "/api/profile/multipleUpload": {
       "post": {
         "tags": [
@@ -250,22 +310,138 @@
           }
         }
       }
-    }
-  },
-  "securityDefinitions": {
-    "petstore_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:pets": "modify pets in your account",
-        "read:pets": "read your pets"
+    },
+    "/profile": {
+      "get": {
+        "tags": [
+          "profiles"
+        ],
+        "summary": "Get users' profiles",
+        "operationId": "getProfile",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "access-token",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/getProfiles"
+            }
+          },
+          "401": {
+            "description": "Invalid or missing token"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "profiles"
+        ],
+        "summary": "Create a profile",
+        "operationId": "postProfile",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "access-token",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/createProfile"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/createdProfile"
+            }
+          },
+          "401": {
+            "description": "Invalid or missing token"
+          }
+        }
       }
     },
-    "api_key": {
-      "type": "apiKey",
-      "name": "api_key",
-      "in": "header"
+    "/profile/{profileId}": {
+      "get": {
+        "tags": [
+          "profiles"
+        ],
+        "summary": "Get a specific profie",
+        "operationId": "getOneProfile",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "type": "string",
+            "name": "access-token",
+            "required": true
+          },
+          {
+            "in": "path",
+            "type": "string",
+            "name": "profileId",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/getProfile"
+            }
+          },
+          "401": {
+            "description": "Invalid or missing token"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "profiles"
+        ],
+        "summary": "Deletes a profile",
+        "operationId": "deleteProfileById",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "description": "Id of profile to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfull operation",
+            "schema": {
+              "$ref": "#/definitions/userDeleted"
+            }
+          },
+          "500": {
+            "description": "Error updating user"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -376,23 +552,28 @@
             "status": {
               "type": "string"
             },
-            "_id": {
-              "type": "string"
-            },
-            "uid": {
-              "type": "string"
-            },
-            "email": {
-              "type": "string"
-            },
-            "phone": {
-              "type": "string"
-            },
-            "name": {
-              "type": "string"
-            },
-            "__v": {
-              "type": "integer"
+            "data": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string"
+                },
+                "uid": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "__v": {
+                  "type": "integer"
+                }
+              }
             }
           }
         }
@@ -410,7 +591,7 @@
             "type": "string"
           },
           "minItems": 2,
-          "maxItems": 10
+          "maxItems": 8
         }
       }
     },
@@ -427,6 +608,165 @@
               "type": "string"
             }
           }
+        }
+      }
+    },
+    "createProfile": {
+      "type": "object",
+      "properties": {
+        "avatar": {
+          "type": "string"
+        },
+        "isHost": {
+          "type": "boolean"
+        },
+        "about": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        }
+      }
+    },
+    "getProfiles": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "body": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string"
+              },
+              "places": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "avatar": {
+                "type": "string"
+              },
+              "isHost": {
+                "type": "boolean"
+              },
+              "about": {
+                "type": "string"
+              },
+              "user_id": {
+                "type": "string"
+              },
+              "favorites": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "__v": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getProfile": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "places": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "avatar": {
+              "type": "string"
+            },
+            "isHost": {
+              "type": "boolean"
+            },
+            "about": {
+              "type": "string"
+            },
+            "user_id": {
+              "type": "string"
+            },
+            "favorites": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "_v": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "createdProfile": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "avatar": {
+              "type": "string"
+            },
+            "isHost": {
+              "type": "boolean"
+            },
+            "about": {
+              "type": "string"
+            },
+            "user": {
+              "type": "string"
+            },
+            "__v": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "Whatsapp": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        }
+      }
+    },
+    "MailTo": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
         }
       }
     },

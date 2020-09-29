@@ -15,6 +15,15 @@ async function listUsers(filterUser) {
     return users
 }
 
+async function listUsersByEmail(filterUser) {
+    let filter = {};
+    if (filterUser !== null) {
+        filter = {email: filterUser}
+    }
+    const users = await Model.find(filter);
+    return users
+}
+
 async function getAuthUser(filterUid) {
     let filter = {};
     if (filterUid !== null) {
@@ -40,5 +49,6 @@ module.exports = {
     list: listUsers,
     delete: deleteUser,
     getAuth: getAuthUser,
-    update: updateUser
+    update: updateUser,
+    listUsersByEmail
 }
