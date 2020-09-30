@@ -69,7 +69,7 @@ placeController.addPlace = async (req, res, next) => {
             closet: req.body.closet,
             size: req.body.size,
             description: req.body.description,
-            profile: req.body.profile,
+            user: req.body.user,
         })
         await place.save()
         res.json({
@@ -101,7 +101,7 @@ placeController.updatePlace = async(req, res, next) => {
       closet: req.body.closet,
       size: req.body.size,
       description: req.body.description,
-      profile: req.body.profile,
+      user: req.body.user,
       
     }
     await Place.findByIdAndUpdate(

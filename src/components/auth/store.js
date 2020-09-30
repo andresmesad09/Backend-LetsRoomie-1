@@ -50,5 +50,5 @@ module.exports = {
     delete: deleteUser,
     getAuth: getAuthUser,
     update: updateUser,
-    listUsersByEmail
+    listUsersByEmail:listUsersByEmail
 }
