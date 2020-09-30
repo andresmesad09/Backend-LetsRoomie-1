@@ -13,16 +13,11 @@ placeController.getPlaces= async (req, res, next) => {
 
 placeController.getPlacesAvalaible= async (req, res, next) => {
   try {
-<<<<<<< HEAD
-    const places = await Place.find({avalaible:true}).populate('profile')
-        response.success(req, res, places, 200);
-=======
     const places = await Place.find({avalaible:true}).populate('user')
         res.json({
           status: 200,
           body: places
         }) 
->>>>>>> 51f504e7f5cce8e518ac3218dcc6faa765e55523
     }catch (error) {
     next(error)
   }
