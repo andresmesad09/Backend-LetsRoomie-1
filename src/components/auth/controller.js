@@ -55,6 +55,12 @@ userController.getUsers = (filterUser) => {
   });
 };
 
+userController.getUsersByEmail = (filterUser) => {
+  return new Promise((resolve, reject) => {
+    resolve(store.listUsersByEmail(filterUser));
+  });
+};
+
 userController.deleteUser = (id) => {
   return new Promise((resolve, reject) => {
     if (!id) {

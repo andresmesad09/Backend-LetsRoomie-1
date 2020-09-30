@@ -55,11 +55,11 @@ router.post('/signin', async (req, res) => {
     const token = jwt.sign(payload, config.llave, {
       expiresIn: 10000,
     });
-    res.json({
-      status: 200,
-      body: user,
-      token: token,
-    });
+    const data = {
+      user,
+      token
+    }
+    response.success(req, res, data, 200);
   } catch (err) {
     response.error(req, res, 'Auth Error', 500, err.message);
   }
@@ -84,21 +84,9 @@ router.get('/users', function (req, res) {
     });
 });
 
-// Get current user
-router.get('/current-user', function (req, res) {
-  const userId = req.body._id || null;
-  controller
-    .getUsers(userId)
-    .then((user) => {
-      response.success(req, res, user, 200);
-    })
-    .catch((error) =>
-      response.error(req, res, 'Error getting the current user', 500, error)
-    );
-});
 
 // Delete a user
-router.delete('/:id', function (req, res) {
+router.delete('/users/:id', function (req, res) {
   const userId = req.params.id;
   controller
     .deleteUser(userId)
@@ -108,7 +96,7 @@ router.delete('/:id', function (req, res) {
           req,
           res,
           "User doesn't exist",
-          403,
+          400,
           "User id doesn't exist in MongoDB"
         );
       } else {
@@ -121,7 +109,7 @@ router.delete('/:id', function (req, res) {
 });
 
 //update a user
-router.put('/:id', function (req, res) {
+router.put('/users/:id', function (req, res) {
   const userId = req.params.id;
   controller
     .updateUser(userId, req.body)

@@ -13,10 +13,6 @@
       "description": "Operations on the user"
     },
     {
-      "name": "profiles",
-      "description": "Operations on the profiles"
-    },
-    {
       "name": "uploadImages",
       "description": "Operations to upload Images"
     },
@@ -33,37 +29,28 @@
     "https"
   ],
   "paths": {
-    "/auth/users": {
+    "/ishost": {
       "get": {
         "tags": [
           "users"
         ],
-        "summary": "List all the users",
-        "description": "List all the users created in our app. If you pass a query /auth/users?_id=user_id, it returns the info of the user_id",
-        "operationId": "getUsers",
-        "parameters": [
-          {
-            "name": "user_id",
-            "type": "string",
-            "in": "query",
-            "required": false,
-            "description": "uid returned in auth"
-          }
-        ],
+        "summary": "List all the hosts",
+        "description": "List all the hosts",
+        "operationId": "getHosts",
         "responses": {
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/hosts"
             }
           },
-          "400": {
-            "description": "Error creating user"
+          "500": {
+            "description": "Unexpected error getting the hosts"
           }
         }
       }
     },
-    "/auth/createUser": {
+    "/createUser": {
       "post": {
         "tags": [
           "users"
@@ -88,7 +75,7 @@
           "201": {
             "description": "successful operation",
             "schema": {
-              "$ref": "#/definitions/User"
+              "$ref": "#/definitions/createdUser"
             }
           },
           "400": {
@@ -97,7 +84,7 @@
         }
       }
     },
-    "/auth/signin": {
+    "/signin": {
       "post": {
         "tags": [
           "users"
@@ -131,34 +118,37 @@
         }
       }
     },
-    "/auth/{userId}": {
-      "put": {
+    "/users": {
+      "get": {
         "tags": [
           "users"
         ],
-        "summary": "Update phone number or name from a user",
-        "operationId": "getUserById",
+        "summary": "List all the users",
+        "description": "List all the users created in our app. If you pass a query /users?_id=user_id, it returns the info of the user_id",
+        "operationId": "getUsers",
         "parameters": [
           {
-            "name": "userId",
-            "in": "path",
-            "description": "Id of user to update",
-            "required": true,
-            "type": "string"
+            "name": "user_id",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "description": "_id of the user"
           }
         ],
         "responses": {
           "200": {
-            "description": "successfull operation",
+            "description": "successful operation",
             "schema": {
               "$ref": "#/definitions/User"
             }
           },
-          "500": {
-            "description": "Error updating user"
+          "400": {
+            "description": "Error creating user"
           }
         }
-      },
+      }
+    },
+    "/users/{userId}": {
       "delete": {
         "tags": [
           "users"
@@ -181,13 +171,77 @@
               "$ref": "#/definitions/userDeleted"
             }
           },
-          "500": {
+          "400": {
+            "description": "Error deleting user"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Updates a user",
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "Id of user to delete",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/createUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfull operation",
+            "schema": {
+              "$ref": "#/definitions/userDeleted"
+            }
+          },
+          "400": {
             "description": "Error updating user"
           }
         }
       }
     },
-    "/auth/contact-wapp": {
+    "/userByEmail": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Get user by email",
+        "operationId": "getUserByEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "Email of user to get",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfull operation",
+            "schema": {
+              "$ref": "#/definitions/userDeleted"
+            }
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/contact-wapp": {
       "get": {
         "tags": [
           "users"
@@ -217,7 +271,7 @@
         }
       }
     },
-    "/auth/contact-mail": {
+    "/contact-mail": {
       "get": {
         "tags": [
           "users"
@@ -310,141 +364,211 @@
           }
         }
       }
-    },
-    "/profile": {
-      "get": {
-        "tags": [
-          "profiles"
-        ],
-        "summary": "Get users' profiles",
-        "operationId": "getProfile",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "type": "string",
-            "name": "access-token",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/getProfiles"
-            }
-          },
-          "401": {
-            "description": "Invalid or missing token"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "profiles"
-        ],
-        "summary": "Create a profile",
-        "operationId": "postProfile",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "type": "string",
-            "name": "access-token",
-            "required": true
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/createProfile"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/createdProfile"
-            }
-          },
-          "401": {
-            "description": "Invalid or missing token"
-          }
-        }
-      }
-    },
-    "/profile/{profileId}": {
-      "get": {
-        "tags": [
-          "profiles"
-        ],
-        "summary": "Get a specific profie",
-        "operationId": "getOneProfile",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "type": "string",
-            "name": "access-token",
-            "required": true
-          },
-          {
-            "in": "path",
-            "type": "string",
-            "name": "profileId",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/getProfile"
-            }
-          },
-          "401": {
-            "description": "Invalid or missing token"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "profiles"
-        ],
-        "summary": "Deletes a profile",
-        "operationId": "deleteProfileById",
-        "parameters": [
-          {
-            "name": "profileId",
-            "in": "path",
-            "description": "Id of profile to delete",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successfull operation",
-            "schema": {
-              "$ref": "#/definitions/userDeleted"
-            }
-          },
-          "500": {
-            "description": "Error updating user"
-          }
-        }
-      }
     }
   },
   "definitions": {
+    "hosts": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "body": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string"
+              },
+              "uid": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "avatar": {
+                "type": "string"
+              },
+              "isHost": {
+                "type": "boolean"
+              },
+              "about": {
+                "type": "string"
+              },
+              "i1": {
+                "type": "boolean"
+              },
+              "i2": {
+                "type": "boolean"
+              },
+              "i3": {
+                "type": "boolean"
+              },
+              "i4": {
+                "type": "boolean"
+              },
+              "i5": {
+                "type": "boolean"
+              },
+              "i6": {
+                "type": "boolean"
+              },
+              "i7": {
+                "type": "boolean"
+              },
+              "i8": {
+                "type": "boolean"
+              },
+              "i9": {
+                "type": "boolean"
+              },
+              "i10": {
+                "type": "boolean"
+              },
+              "createdAt": {
+                "type": "string"
+              },
+              "updatedAt": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "createUser": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "isHost": {
+          "type": "boolean"
+        },
+        "about": {
+          "type": "string"
+        },
+        "i1": {
+          "type": "boolean"
+        },
+        "i2": {
+          "type": "boolean"
+        },
+        "i3": {
+          "type": "boolean"
+        },
+        "i4": {
+          "type": "boolean"
+        },
+        "i5": {
+          "type": "boolean"
+        },
+        "i6": {
+          "type": "boolean"
+        },
+        "i7": {
+          "type": "boolean"
+        },
+        "i8": {
+          "type": "boolean"
+        },
+        "i9": {
+          "type": "boolean"
+        },
+        "i10": {
+          "type": "boolean"
+        }
+      }
+    },
+    "createdUser": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "body": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string"
+              },
+              "uid": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "avatar": {
+                "type": "string"
+              },
+              "isHost": {
+                "type": "boolean"
+              },
+              "about": {
+                "type": "string"
+              },
+              "i1": {
+                "type": "boolean"
+              },
+              "i2": {
+                "type": "boolean"
+              },
+              "i3": {
+                "type": "boolean"
+              },
+              "i4": {
+                "type": "boolean"
+              },
+              "i5": {
+                "type": "boolean"
+              },
+              "i6": {
+                "type": "boolean"
+              },
+              "i7": {
+                "type": "boolean"
+              },
+              "i8": {
+                "type": "boolean"
+              },
+              "i9": {
+                "type": "boolean"
+              },
+              "i10": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    },
     "User": {
       "type": "object",
       "properties": {
@@ -473,28 +597,11 @@
         }
       }
     },
-    "createUser": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
-        },
-        "phone": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        }
-      }
-    },
     "userAuthenticated": {
       "type": "object",
       "properties": {
-        "status": {
-          "type": "integer"
+        "error": {
+          "type": "string"
         },
         "body": {
           "type": "object",
@@ -515,6 +622,51 @@
                   "type": "string"
                 },
                 "name": {
+                  "type": "string"
+                },
+                "avatar": {
+                  "type": "string"
+                },
+                "isHost": {
+                  "type": "boolean"
+                },
+                "about": {
+                  "type": "string"
+                },
+                "i1": {
+                  "type": "boolean"
+                },
+                "i2": {
+                  "type": "boolean"
+                },
+                "i3": {
+                  "type": "boolean"
+                },
+                "i4": {
+                  "type": "boolean"
+                },
+                "i5": {
+                  "type": "boolean"
+                },
+                "i6": {
+                  "type": "boolean"
+                },
+                "i7": {
+                  "type": "boolean"
+                },
+                "i8": {
+                  "type": "boolean"
+                },
+                "i9": {
+                  "type": "boolean"
+                },
+                "i10": {
+                  "type": "boolean"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "updatedAt": {
                   "type": "string"
                 },
                 "__v": {
@@ -568,6 +720,51 @@
                   "type": "string"
                 },
                 "name": {
+                  "type": "string"
+                },
+                "avatar": {
+                  "type": "string"
+                },
+                "isHost": {
+                  "type": "string"
+                },
+                "about": {
+                  "type": "string"
+                },
+                "i1": {
+                  "type": "boolean"
+                },
+                "i2": {
+                  "type": "boolean"
+                },
+                "i3": {
+                  "type": "boolean"
+                },
+                "i4": {
+                  "type": "boolean"
+                },
+                "i5": {
+                  "type": "boolean"
+                },
+                "i6": {
+                  "type": "boolean"
+                },
+                "i7": {
+                  "type": "boolean"
+                },
+                "i8": {
+                  "type": "boolean"
+                },
+                "i9": {
+                  "type": "boolean"
+                },
+                "i10": {
+                  "type": "boolean"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "updatedAt": {
                   "type": "string"
                 },
                 "__v": {
