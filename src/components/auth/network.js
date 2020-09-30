@@ -20,6 +20,9 @@ router.post('/createUser', async (req, res) => {
       email: req.body.email,
       phone: req.body.phone,
       name: req.body.name,
+      avatar: req.body.avatar,
+      isHost: req.body.isHost,
+      about: req.body.about,
     };
 
     const user = await controller.addUser(newUser);
