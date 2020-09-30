@@ -26,6 +26,18 @@ favoriteController.getOneFavorite = async (req, res,next) =>{
   }
 }
 
+favoriteController.getFavoritePlace= async (req, res, next) => {
+  try {
+    const favorites = await Favorite.find({place:req.params.city})
+        res.json({
+          status: 200,
+          body: favorites
+        }) 
+    }catch (error) {
+    next(error)
+  }
+}
+
 favoriteController.addFavorite = async (req, res, next) => {
     try {
         const favorite = new Favorite({
