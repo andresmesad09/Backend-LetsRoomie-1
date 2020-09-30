@@ -13,8 +13,16 @@ placeController.getPlaces= async (req, res, next) => {
 
 placeController.getPlacesAvalaible= async (req, res, next) => {
   try {
+<<<<<<< HEAD
     const places = await Place.find({avalaible:true}).populate('profile')
         response.success(req, res, places, 200);
+=======
+    const places = await Place.find({avalaible:true}).populate('user')
+        res.json({
+          status: 200,
+          body: places
+        }) 
+>>>>>>> 51f504e7f5cce8e518ac3218dcc6faa765e55523
     }catch (error) {
     next(error)
   }
@@ -61,7 +69,7 @@ placeController.addPlace = async (req, res, next) => {
             closet: req.body.closet,
             size: req.body.size,
             description: req.body.description,
-            profile: req.body.profile,
+            user: req.body.user,
         })
         await place.save()
         res.json({
@@ -93,7 +101,7 @@ placeController.updatePlace = async(req, res, next) => {
       closet: req.body.closet,
       size: req.body.size,
       description: req.body.description,
-      profile: req.body.profile,
+      user: req.body.user,
       
     }
     await Place.findByIdAndUpdate(
