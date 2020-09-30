@@ -6,7 +6,11 @@ const mySchema = new Schema({
     uid: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },
-    name: { type: String, required: true }
+    name: { type: String, required: true },
+    avatar: { type: String, required: false },
+    isHost: { type: Boolean, required: true },
+    about: { type: String, required: false }
+    
 },
 {
     timestamps: true

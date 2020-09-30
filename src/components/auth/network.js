@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 
 const config = require('../../config');
 
+router.get('/ishost', controller.getUserIsHost)
 //Create user
 router.post('/createUser', async (req, res) => {
   try {

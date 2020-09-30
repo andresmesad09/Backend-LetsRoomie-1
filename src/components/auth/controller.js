@@ -2,6 +2,9 @@ const firebase = require("firebase/app");
 require("firebase/auth");
 const store = require('./store');
 const config = require('../../config');
+const userController = {};
+const User = require('./model');
+
 
 const fb = firebase.initializeApp({
     apiKey: config.fbApiKey,
@@ -14,11 +17,11 @@ const fb = firebase.initializeApp({
 })
 
 
-async function createUser(email, password) {
+userController.createUser = async  (email, password) => {
     return fb.auth().createUserWithEmailAndPassword(email, password);
 }
 
-async function authenticate(email, password) {
+userController.authenticate= async (email, password) => {
         if (!email || !password) {
             console.error('[userController] No hay usuario o password');
             throw new Error('Los datos son incorrectos');
@@ -33,17 +36,9 @@ async function authenticate(email, password) {
             }
         }
     }
-    async function logout() {
-        try {
-            const data = await fb.auth().signOut();
-        } catch(e) {
-            throw new Error(e);
-        }
-    }
-    
 
 
-function addUser(user) {
+    userController.addUser = (user) => {
     return new Promise((resolve, reject) => {
         if (!user) {
             console.error('[userController] No hay usuario');
@@ -56,30 +51,25 @@ function addUser(user) {
     })
 }
 
-function getUsers(filterUser) {
+userController.getUsers = (filterUser) => {
     return new Promise((resolve, reject) => {
         resolve(store.list(filterUser));
     })
 }
 
-function getUsersByEmail(filterUser) {
-    return new Promise((resolve, reject) => {
-        resolve(store.listUsersByEmail(filterUser));
-    })
-}
-
-function deleteUser(id) {
+userController.deleteUser = (id) => {
     return new Promise((resolve, reject) => {
         if (!id) {
             console.log('[User controller] No id to eliminate');
             reject('Missing id');
             return false;
         }
+
         resolve(store.delete(id));
     })
 }
 
-function updateUser(id, data) {
+userController.updateUser = (id, data) => {
     return new Promise((resolve, reject) => {
         if (!id || !data) {
             console.log('[User controller] no data to update');
@@ -89,14 +79,15 @@ function updateUser(id, data) {
         resolve(store.update(id, data))
     })
 }
-
-module.exports = {
-    createUser,
-    authenticate,
-    addUser,
-    getUsers,
-    deleteUser,
-    updateUser,
-    getUsersByEmail,
-    logout
-}
+userController.getUserIsHost= async (req, res, next) => {
+    try {
+      const users = await User.find({isHost:true})
+      res.json({
+        status: 200,
+        body: users
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
+module.exports = userController
