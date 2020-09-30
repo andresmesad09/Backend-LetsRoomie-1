@@ -1,13 +1,11 @@
 const Place = require('./model');
 const placeController = {};
+const response = require('../../network/response');
 
 placeController.getPlaces= async (req, res, next) => {
   try {
     const places = await Place.find()//.populate('user')
-    res.json({
-      status: 200,
-      body: places
-    })
+    response.success(req, res, places, 200);
   } catch (error) {
     next(error)
   }
@@ -41,10 +39,7 @@ placeController.getOnePlace = async (req, res,next) =>{
 placeController.getOnePlaceCity = async (req, res,next) =>{
   try {
     const place = await Place.find({city:req.params.city})
-    res.json({
-      status:200,
-      body:place
-    })
+    response.success(req, res, place, 200);
   } catch (error) {
     next(error)
   }
