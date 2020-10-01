@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js",
-    "dev": "nodemon src/index.js"
+    "test": "node test/app.test.js",
+    "start": "nodemon src/server.js",
+    "dev": "nodemon src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -29,5 +29,12 @@
     "swagger-ui-express": "^4.1.4",
     "url": "^0.11.0",
     "uuid": "^8.3.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^26.4.2",
+    "superagent": "^6.1.0",
+    "supertest": "^5.0.0"
   }
 }
