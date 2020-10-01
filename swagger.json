@@ -364,6 +364,282 @@
           }
         }
       }
+    },
+    "/place": {
+      "get": {
+        "tags": [
+          "places"
+        ],
+        "summary": "Get all the places",
+        "description": "Get all the places from the app",
+        "operationId": "getPlaces",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/getPlaces"
+            }
+          },
+          "400": {
+            "description": "Error creating the link"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "places"
+        ],
+        "summary": "Create a place",
+        "description": "Create a place for LetsRoomie",
+        "operationId": "createPlace",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/createPlace"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/getPlaces"
+            }
+          },
+          "400": {
+            "description": "Error creating place"
+          }
+        }
+      }
+    },
+    "/placea": {
+      "get": {
+        "tags": [
+          "places"
+        ],
+        "summary": "Get all the available places",
+        "description": "List all the available places in LetsRoomie",
+        "operationId": "getAvailablePlaces",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/getPlaces"
+            }
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/place/{placeId}": {
+      "get": {
+        "tags": [
+          "places"
+        ],
+        "summary": "Get a specific place",
+        "description": "Get a specific place, passing the placeId in the params",
+        "operationId": "getOnePlace",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "placeId",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/getPlaces"
+            }
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "places"
+        ],
+        "summary": "Delete a place",
+        "description": "Deletes a specific place. Pass the id in the path",
+        "operationId": "deletePlace",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "placeId",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "places"
+        ],
+        "summary": "Update a place",
+        "description": "Updates a place passing the id in the path and the token in the header",
+        "operationId": "updatePlace",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updatePlace"
+            }
+          },
+          {
+            "in": "path",
+            "name": "placeId",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/getPlaces"
+            }
+          },
+          "400": {
+            "description": "Error updating the place"
+          }
+        }
+      }
+    },
+    "/placec/{city}": {
+      "get": {
+        "tags": [
+          "places"
+        ],
+        "summary": "Get the places of a specific city",
+        "description": "Get the places of a given city. Pass the city in the path.",
+        "operationId": "getPlacesFromCity",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "city",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/getPlaces"
+            }
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
+    },
+    "/fav": {
+      "get": {
+        "tags": [
+          "favorites"
+        ],
+        "summary": "Get favorites",
+        "description": "Get all the favorites from a user passing the userId in the query",
+        "operationId": "getFavorites",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "acess-token",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "user",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success operation",
+            "schema": {
+              "$ref": "#/definitions/getFavorites"
+            }
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "favorites"
+        ],
+        "summary": "Create a favorite",
+        "description": "Create a favorite passing the userId and the placeId",
+        "operationId": "createFavorite",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "acess-token",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/createFavorite"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "500": {
+            "description": "Error creating favorite"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -597,6 +873,71 @@
         }
       }
     },
+    "singleUser": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "isHost": {
+          "type": "boolean"
+        },
+        "about": {
+          "type": "string"
+        },
+        "i1": {
+          "type": "boolean"
+        },
+        "i2": {
+          "type": "boolean"
+        },
+        "i3": {
+          "type": "boolean"
+        },
+        "i4": {
+          "type": "boolean"
+        },
+        "i5": {
+          "type": "boolean"
+        },
+        "i6": {
+          "type": "boolean"
+        },
+        "i7": {
+          "type": "boolean"
+        },
+        "i8": {
+          "type": "boolean"
+        },
+        "i9": {
+          "type": "boolean"
+        },
+        "i10": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      }
+    },
     "userAuthenticated": {
       "type": "object",
       "properties": {
@@ -808,143 +1149,6 @@
         }
       }
     },
-    "createProfile": {
-      "type": "object",
-      "properties": {
-        "avatar": {
-          "type": "string"
-        },
-        "isHost": {
-          "type": "boolean"
-        },
-        "about": {
-          "type": "string"
-        },
-        "user": {
-          "type": "string"
-        }
-      }
-    },
-    "getProfiles": {
-      "type": "object",
-      "properties": {
-        "error": {
-          "type": "string"
-        },
-        "body": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "_id": {
-                "type": "string"
-              },
-              "places": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "avatar": {
-                "type": "string"
-              },
-              "isHost": {
-                "type": "boolean"
-              },
-              "about": {
-                "type": "string"
-              },
-              "user_id": {
-                "type": "string"
-              },
-              "favorites": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "__v": {
-                "type": "integer"
-              }
-            }
-          }
-        }
-      }
-    },
-    "getProfile": {
-      "type": "object",
-      "properties": {
-        "error": {
-          "type": "string"
-        },
-        "body": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string"
-            },
-            "places": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "avatar": {
-              "type": "string"
-            },
-            "isHost": {
-              "type": "boolean"
-            },
-            "about": {
-              "type": "string"
-            },
-            "user_id": {
-              "type": "string"
-            },
-            "favorites": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "_v": {
-              "type": "integer"
-            }
-          }
-        }
-      }
-    },
-    "createdProfile": {
-      "type": "object",
-      "properties": {
-        "error": {
-          "type": "string"
-        },
-        "body": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string"
-            },
-            "avatar": {
-              "type": "string"
-            },
-            "isHost": {
-              "type": "boolean"
-            },
-            "about": {
-              "type": "string"
-            },
-            "user": {
-              "type": "string"
-            },
-            "__v": {
-              "type": "integer"
-            }
-          }
-        }
-      }
-    },
     "Whatsapp": {
       "type": "object",
       "properties": {
@@ -967,6 +1171,144 @@
         }
       }
     },
+    "getPlaces": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "images": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "furniture": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "_id": {
+              "type": "string"
+            },
+            "namePlace": {
+              "type": "string"
+            },
+            "location": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "price": {
+              "type": "integer"
+            },
+            "available": {
+              "type": "boolean"
+            },
+            "wifi": {
+              "type": "boolean"
+            },
+            "bath": {
+              "type": "boolean"
+            },
+            "parking": {
+              "type": "boolean"
+            },
+            "tv": {
+              "type": "boolean"
+            },
+            "cleaning": {
+              "type": "boolean"
+            },
+            "closet": {
+              "type": "boolean"
+            },
+            "size": {
+              "type": "integer"
+            },
+            "description": {
+              "type": "string"
+            },
+            "user": {
+              "$ref": "#/definitions/singleUser"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "updatedAt": {
+              "type": "string"
+            },
+            "__v": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "createPlace": {
+      "type": "object",
+      "properties": {
+        "namePlace": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "price": {
+          "type": "integer"
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "furniture": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "wifi": {
+          "type": "boolean"
+        },
+        "bath": {
+          "type": "boolean"
+        },
+        "parking": {
+          "type": "boolean"
+        },
+        "tv": {
+          "type": "boolean"
+        },
+        "cleaning": {
+          "type": "boolean"
+        },
+        "closet": {
+          "type": "boolean"
+        },
+        "size": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        }
+      }
+    },
     "ApiResponse": {
       "type": "object",
       "properties": {
@@ -974,7 +1316,108 @@
           "type": "string"
         },
         "body": {
-          "type": "object"
+          "type": "string"
+        }
+      }
+    },
+    "updatePlace": {
+      "type": "object",
+      "properties": {
+        "namePlace": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "price": {
+          "type": "integer"
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "furniture": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "wifi": {
+          "type": "boolean"
+        },
+        "bath": {
+          "type": "boolean"
+        },
+        "parking": {
+          "type": "boolean"
+        },
+        "tv": {
+          "type": "boolean"
+        },
+        "cleaning": {
+          "type": "boolean"
+        },
+        "closet": {
+          "type": "boolean"
+        },
+        "size": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "getFavorites": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "body": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string"
+              },
+              "place": {
+                "type": "object"
+              },
+              "user": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string"
+              },
+              "updatedAt": {
+                "type": "string"
+              },
+              "__v": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "createFavorite": {
+      "type": "object",
+      "properties": {
+        "place": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
         }
       }
     }

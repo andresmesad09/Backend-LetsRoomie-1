@@ -1,28 +1,27 @@
 const Favorite = require('./model');
 const favoriteController = {};
+const response = require('../../network/response')
 
 favoriteController.getFavorites= async (req, res, next) => {
   try {
-    const favorites = await Favorite.find()
-    res.json({
-      status: 200,
-      body: favorites
-    })
+    if (!req.query.user) {
+      const favorites = await Favorite.find();
+      response.success(req, res, favorites, 200);
+    } else {
+      const favorites = await Favorite.find({user: req.query.user}).populate('place');
+      response.success(req, res, favorites, 200);
+    }
   } catch (error) {
-    next(error)
+    response.error(req, res, "Unexpected error", 500, error.message);
   }
 }
 
 favoriteController.getOneFavorite = async (req, res,next) =>{
   try {
-    console.log('entre aca')
-    const favorite = await Favorite.findById(req.params.id)
-    res.json({
-      status:200,
-      body:favorite
-    })
+    const favorite = await Favorite.findById(req.params.id).populate('place');
+    response.success(req, res, favorite, 200);
   } catch (error) {
-    next(error)
+    response.error(req, res, "Unexpected error", 500, error.message);
   }
 }
 
