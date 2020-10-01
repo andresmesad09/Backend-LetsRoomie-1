@@ -27,7 +27,7 @@ placeController.getPlacesAvalaible= async (req, res, next) => {
 
 placeController.getOnePlace = async (req, res,next) =>{
   try {
-    const place = await Place.findById(req.params.id)
+    const place = await Place.findById(req.params.id).populate('user')
     res.json({
       status:200,
       body:place
