@@ -24,16 +24,8 @@ placeController.getPlacesAvalaible= async (req, res, next) => {
 
 placeController.getOnePlace = async (req, res,next) =>{
   try {
-<<<<<<< HEAD
     const place = await Place.findById(req.params.id).populate('user');
     response.success(req, res, place, 200);
-=======
-    const place = await Place.findById(req.params.id).populate('user')
-    res.json({
-      status:200,
-      body:place
-    })
->>>>>>> 7a16e5ae40e0799cbbfc68be4b5bc13d02828c48
   } catch (error) {
     response.error(req, res, "Unexpected error", 500, error.message);
   }
