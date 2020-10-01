@@ -4,22 +4,19 @@ const response = require('../../network/response');
 
 placeController.getPlaces= async (req, res, next) => {
   try {
-    const places = await Place.find()//.populate('user')
+    const places = await Place.find().populate('user');
     response.success(req, res, places, 200);
   } catch (error) {
-    next(error)
+    response.error(req, res, "Unexpected error", 500, error.message);
   }
 }
 
 placeController.getPlacesAvalaible= async (req, res, next) => {
   try {
-    const places = await Place.find({avalaible:true}).populate('user')
-        res.json({
-          status: 200,
-          body: places
-        }) 
-    }catch (error) {
-    next(error)
+    const places = await Place.find({avalaible:true}).populate('user');
+    response.success(req, res, places, 200);
+    } catch (error) {
+    response.error(req, res, "Unexpected error", 500, error.message);
   }
 }
 
@@ -27,18 +24,15 @@ placeController.getPlacesAvalaible= async (req, res, next) => {
 
 placeController.getOnePlace = async (req, res,next) =>{
   try {
-    const place = await Place.findById(req.params.id)
-    res.json({
-      status:200,
-      body:place
-    })
+    const place = await Place.findById(req.params.id).populate('user');
+    response.success(req, res, place, 200);
   } catch (error) {
-    next(error)
+    response.error(req, res, "Unexpected error", 500, error.message);
   }
 }
 placeController.getOnePlaceCity = async (req, res,next) =>{
   try {
-    const place = await Place.find({city:req.params.city})
+    const place = await Place.find({city:req.params.city}).populate('user');
     response.success(req, res, place, 200);
   } catch (error) {
     next(error)
