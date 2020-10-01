@@ -524,6 +524,12 @@
             "schema": {
               "$ref": "#/definitions/updatePlace"
             }
+          },
+          {
+            "in": "path",
+            "name": "placeId",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
