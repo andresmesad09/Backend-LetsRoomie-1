@@ -61,14 +61,11 @@ placeController.addPlace = async (req, res, next) => {
             user: req.body.user,
         })
         await place.save()
-        res.json({
-          status: 201,
-          body: place
-        })
+        response.success(req, res, place, 201);
         
         
       } catch (error) {
-        next(error)
+        response.error(req, res, "Error creating place", 500, error.message);
       }
 }
 
@@ -98,25 +95,20 @@ placeController.updatePlace = async(req, res, next) => {
       { $set: place },
       { omitUndefined: true, upsert: true }
     )
-    res.json({
-      status: 200,
-      message: 'Place updated',
-      body: place
-    })
+
+    const placeUpdated = await Place.findById(req.params.id).populate('user');
+    response.success(req, res, placeUpdated, 200);
   } catch (error) {
-    next(error)
+    response.error(req, res, "Error updating the place", 400, error.message);
   }
 }
 
 placeController.deletePlace = async(req, res, next) => {
   try{
     await Place.findByIdAndRemove(req.params.id)
-    res.json({
-      status: 200,
-      message: `Place ${req.params.id} deleted`
-    })
+    response.success(req, res, `Place ${req.params.id} deleted`, 200);
   }catch(error){
-    next(error)
+    response.error(req, res, "Unexpected error", 500, error.message);
   }
 }
 
