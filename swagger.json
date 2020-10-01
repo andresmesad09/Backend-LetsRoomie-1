@@ -573,6 +573,73 @@
           }
         }
       }
+    },
+    "/fav": {
+      "get": {
+        "tags": [
+          "favorites"
+        ],
+        "summary": "Get favorites",
+        "description": "Get all the favorites from a user passing the userId in the query",
+        "operationId": "getFavorites",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "acess-token",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "user",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success operation",
+            "schema": {
+              "$ref": "#/definitions/getFavorites"
+            }
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "favorites"
+        ],
+        "summary": "Create a favorite",
+        "description": "Create a favorite passing the userId and the placeId",
+        "operationId": "createFavorite",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "acess-token",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/createFavorite"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "500": {
+            "description": "Error creating favorite"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1305,6 +1372,51 @@
           "type": "integer"
         },
         "description": {
+          "type": "string"
+        }
+      }
+    },
+    "getFavorites": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "body": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string"
+              },
+              "place": {
+                "type": "object"
+              },
+              "user": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string"
+              },
+              "updatedAt": {
+                "type": "string"
+              },
+              "__v": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "createFavorite": {
+      "type": "object",
+      "properties": {
+        "place": {
+          "type": "string"
+        },
+        "user": {
           "type": "string"
         }
       }
