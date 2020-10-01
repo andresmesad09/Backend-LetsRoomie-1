@@ -632,11 +632,112 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "successful operation"
+          "201": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/createdFavorite"
+            }
           },
           "500": {
             "description": "Error creating favorite"
+          }
+        }
+      }
+    },
+    "/fav/{favId}": {
+      "get": {
+        "tags": [
+          "favorites"
+        ],
+        "summary": "Get a specific favorite",
+        "operationId": "getOneFavorite",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "favId",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/getFavorites"
+            }
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "favorites"
+        ],
+        "summary": "Delete a specific favorite",
+        "operationId": "deleteOneFavorite",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "favId",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ApiResponse"
+            }
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "favorites"
+        ],
+        "summary": "Updated a specific favorite",
+        "operationId": "updateFavorite",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "favId",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/createdFavorite"
+            }
+          },
+          "500": {
+            "description": "Unexpected error"
           }
         }
       }
@@ -1418,6 +1519,37 @@
         },
         "user": {
           "type": "string"
+        }
+      }
+    },
+    "createdFavorite": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "place": {
+              "type": "string"
+            },
+            "user": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "updatedAt": {
+              "type": "string"
+            },
+            "__v": {
+              "type": "integer"
+            }
+          }
         }
       }
     }
