@@ -212,17 +212,18 @@
         }
       }
     },
-    "/userByEmail": {
+    "/user/{email}": {
       "get": {
         "tags": [
           "users"
         ],
         "summary": "Get user by email",
+        "description": "Get an user passing the email in path",
         "operationId": "getUserByEmail",
         "parameters": [
           {
             "name": "email",
-            "in": "query",
+            "in": "path",
             "description": "Email of user to get",
             "required": true,
             "type": "string"

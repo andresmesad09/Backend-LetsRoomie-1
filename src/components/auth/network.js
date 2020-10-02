@@ -122,8 +122,8 @@ router.put('/users/:id', function (req, res) {
 });
 
 //Get user by email
-router.get('/userByEmail', function (req, res) {
-  const filterUsers = req.query.email|| null;
+router.get('/user/:email', function (req, res) {
+  const filterUsers = req.params.email|| null;
   controller
     .getUsersByEmail(filterUsers)
     .then((usersList) => {
