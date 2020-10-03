@@ -41,12 +41,26 @@ favoriteController.getFavoritePlace = async (req, res, next) => {
 
 favoriteController.addFavorite = async (req, res, next) => {
   try {
-    const favorite = new Favorite({
+    const fav = await Favorite.find({
       place: req.body.place,
       user: req.body.user,
     });
-    await favorite.save();
-    response.success(req, res, favorite, 201);
+    if (fav.length !== 0) {
+      response.error(
+        req,
+        res,
+        'Place and user already exist',
+        500,
+        'Place and user already exist'
+      );
+    } else {
+      const favorite = new Favorite({
+        place: req.body.place,
+        user: req.body.user,
+      });
+      await favorite.save();
+      response.success(req, res, favorite, 201);
+    }
   } catch (error) {
     response.error(req, res, 'Unexpected error', 500, error.message);
   }

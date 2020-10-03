@@ -586,7 +586,7 @@
         "parameters": [
           {
             "in": "header",
-            "name": "acess-token",
+            "name": "access-token",
             "type": "string",
             "required": true
           },
@@ -614,12 +614,12 @@
           "favorites"
         ],
         "summary": "Create a favorite",
-        "description": "Create a favorite passing the userId and the placeId",
+        "description": "Create a favorite passing the userId and the placeId. If they already exist in DB, it returns: Place and user already exist",
         "operationId": "createFavorite",
         "parameters": [
           {
             "in": "header",
-            "name": "acess-token",
+            "name": "access-token",
             "type": "string",
             "required": true
           },
