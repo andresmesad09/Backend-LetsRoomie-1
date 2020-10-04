@@ -26,7 +26,7 @@ AWS S3 | Manage static files
 
 You cand find the documentation of the routes [here](https://api-letsroomie.herokuapp.com/api-docs/)
 
-[![](Api-Docs)](https://letsroomie.s3.us-east-2.amazonaws.com/apiDocs-1601835682202.png)
+![](https://letsroomie.s3.us-east-2.amazonaws.com/apiDocs-1601835682202.png)
 
 ## Contributing
 After clone this project: 
@@ -40,8 +40,8 @@ After clone this project:
 ### Testing
 `npm run coverage`
 
-This test script create a couple of folders and in coverage/lcov-report-index you can find the coverage report as shown below:
+This test script creates a couple of folders and in coverage/lcov-report-index you can find the coverage report as shown below:
 
-[![](Coverage-report)](https://letsroomie.s3.us-east-2.amazonaws.com/coverageReport-1601835805788.png)
+![](https://letsroomie.s3.us-east-2.amazonaws.com/coverageReport-1601835805788.png)
 
 Finally, you can send your pull request to dev branch.
