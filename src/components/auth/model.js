@@ -10,16 +10,16 @@ const mySchema = new Schema({
     avatar: { type: String, required: false },
     isHost: { type: Boolean, required: true },
     about: { type: String, required: false },
-        i1:{type: Boolean, required: false},
-        i2:{type: Boolean, required: false},
-        i3:{type: Boolean, required: false},
-        i4:{type: Boolean, required: false},
-        i5:{type: Boolean, required: false},
-        i6:{type: Boolean, required: false},
-        i7:{type: Boolean, required: false},
-        i8:{type: Boolean, required: false},
-        i9:{type: Boolean, required: false},
-        i10:{type: Boolean, required: false}
+        movietheater:{type: Boolean, required: false},
+        literature:{type: Boolean, required: false},
+        sports:{type: Boolean, required: false},
+        parties:{type: Boolean, required: false},
+        study:{type: Boolean, required: false},
+        music:{type: Boolean, required: false},
+        friends:{type: Boolean, required: false},
+        travel:{type: Boolean, required: false},
+        art:{type: Boolean, required: false},
+        work:{type: Boolean, required: false}
 },
 {
     timestamps: true
