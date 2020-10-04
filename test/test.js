@@ -3,6 +3,7 @@ let chaiHttp = require('chai-http');
 const expect = require('chai').expect;
 
 chai.use(chaiHttp);
+
 const server = require('../src/server');
 const config = require("../src/config");
 const db = require('../src/components/db/db');
@@ -11,7 +12,7 @@ db(config.dbUrl);
 
 
 describe('Users routes: ', () => {
-  it('should create an user', (done) => {
+  it('shouldn´t create an user', (done) => {
     chai
       .request(server)
       .post('/createUser')
@@ -26,12 +27,47 @@ describe('Users routes: ', () => {
       })
       .end(function (err, res) {
         console.log(res.body);
-        expect(res).to.have.status(201);
+        expect(res).to.have.status(400);
         done();
       });
   });
 
-  it('should get host', (done) => {
+  it('shouldn´t create an user due to no user send', (done) => {
+    chai
+      .request(server)
+      .post('/createUser')
+      .end(function (err, res) {
+        console.log(res.body);
+        expect(res).to.have.status(400);
+        done();
+      });
+  });
+
+
+  it('Shouldn´t delete an user due to no id', (done) => {
+    chai
+      .request(server)
+      .delete('/users/')
+      .end(function (err, res) {
+        console.log(res.body);
+        expect(res).to.have.status(404);
+        done();
+      });
+  })
+
+  it('Shouldn´t delete an user', (done) => {
+    chai
+      .request(server)
+      .delete('/users/5f6beff49571bf2deed1d25c')
+      .end(function (err, res) {
+        console.log(res.body);
+        expect(res).to.have.status(400);
+        done();
+      });
+  })
+
+
+  it('should get hosts', (done) => {
     chai
       .request(server)
       .get('/ishost')
@@ -51,7 +87,7 @@ describe('Users routes: ', () => {
       });
   });
 
-  it('should get users', (done) => {
+  it('should get user by Id', (done) => {
     chai
       .request(server)
       .get('/users?_id=5f73fc3e784ab646500eaccf')
@@ -61,7 +97,7 @@ describe('Users routes: ', () => {
       });
   });
 
-  it('should get users', (done) => {
+  it('should get user by email', (done) => {
     chai
       .request(server)
       .get('/user/test@test.com')
@@ -71,4 +107,199 @@ describe('Users routes: ', () => {
       });
   });
 
+  it('should get user by email', (done) => {
+    chai
+      .request(server)
+      .get('/user/test@test.com')
+      .end(function (err, res) {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  it('should Login a user and got an object', (done) => {
+    chai
+      .request(server)
+      .post('/signin')
+      .send({
+        email: 'test8@test.com',
+        password: 'unacontraseña',
+      })
+      .end(function (err, res) {
+        console.log(res.body);
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object')
+        done();
+      });
+  });
+
+  it('shouldn´t Login due to invalid password', (done) => {
+    chai
+      .request(server)
+      .post('/signin')
+      .send({
+        email: 'test8@test.com',
+        password: 'unacontrase',
+      })
+      .end(function (err, res) {
+        console.log(res.body);
+        expect(res).to.have.status(500);
+        expect(res.body).to.be.a('object')
+        done();
+      });
+  });
+
+  it('shouldn´t Login due to no data', (done) => {
+    chai
+      .request(server)
+      .post('/signin')
+      .end(function (err, res) {
+        console.log(res.body);
+        expect(res).to.have.status(500);
+        done();
+      });
+  });
+
+
+  it('should get Mail link', (done) => {
+    chai
+      .request(server)
+      .get('/contact-mail?_id=5f740c395ec7c746fc4fbb59')
+      .end(function (err, res) {
+        console.log(res.body);
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  it('shouldn´t get Mail link due to invalid id', (done) => {
+    chai
+      .request(server)
+      .get('/contact-mail?_id=5f740c395ec7c746fc7fbb58')
+      .end(function (err, res) {
+        console.log(res.body);
+        expect(res).to.have.status(400);
+        done();
+      });
+  });
+
+  it('should get Whatsapp link', (done) => {
+    chai
+      .request(server)
+      .get('/contact-wapp?_id=5f740c395ec7c746fc4fbb59')
+      .end(function (err, res) {
+        console.log(res.body);
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  it('shouldn´t get Whatsapp link due to invalid id', (done) => {
+    chai
+      .request(server)
+      .get('/contact-wapp?_id=7f740c395ec7c746fc3fbb59')
+      .end(function (err, res) {
+        console.log(res.body);
+        expect(res).to.have.status(400);
+        done();
+      });
+  });
+
 });
+
+/*
+Favorite routes
+*/
+describe("Favorites routes", () => {
+  it('shouldn´t get favorites because there is no token ', (done) => {
+    chai
+      .request(server)
+      .get('/fav')
+      .end(function (err, res) {
+        expect(res).to.have.status(401);
+        done();
+      });
+  });
+
+  it('shouldn´t get favorite by Id because there is no token ', (done) => {
+    chai
+      .request(server)
+      .get('/fav/5f7555fd70e3f9379c26e0dc')
+      .end(function (err, res) {
+        expect(res).to.have.status(401);
+        done();
+      });
+  });
+
+  it('shouldn´t delete favorite by Id because there is no token ', (done) => {
+    chai
+      .request(server)
+      .delete('/fav/5f7555fd70e3f9379c26e0dc')
+      .end(function (err, res) {
+        expect(res).to.have.status(401);
+        done();
+      });
+  });
+
+  it('shouldn´t get favorites from a user by Id because there is no token ', (done) => {
+    chai
+      .request(server)
+      .get('/fav?user=5f740c395ec7c746fc4fbb59')
+      .end(function (err, res) {
+        expect(res).to.have.status(401);
+        done();
+      });
+  });
+
+  it('should get favorites from a city', (done) => {
+    chai
+      .request(server)
+      .get('/fav/place/5f6d3de10948e7266410ac71')
+      .end(function (err, res) {
+        expect(res).to.have.status(401);
+        done();
+      });
+  });
+})
+
+describe("Places routes", () => {
+  it('should get all the places', (done) => {
+    chai
+      .request(server)
+      .get('/place')
+      .end(function (err, res) {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  it('should get all the available places', (done) => {
+    chai
+      .request(server)
+      .get('/place')
+      .end(function (err, res) {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  it('should get one place', (done) => {
+    chai
+      .request(server)
+      .get('/place/5f753d54f8a90e433494fb69')
+      .end(function (err, res) {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  it('should get place from a city', (done) => {
+    chai
+      .request(server)
+      .get('/placec/Bogotá')
+      .end(function (err, res) {
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+})

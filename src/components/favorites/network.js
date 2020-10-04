@@ -4,7 +4,7 @@ const favorite = require('./controller')
 const auth =  require('../middleware/auth')
 
 router.get('/fav', auth, favorite.getFavorites)
-router.get('/favplace',auth, favorite.getFavoritePlace)
+router.get('/fav/place/:place',auth, favorite.getFavoritePlace)
 router.post('/fav', auth, favorite.addFavorite)
 router.get('/fav/:id', auth, favorite.getOneFavorite)
 router.patch('/fav/:id', auth, favorite.updateFavorite)

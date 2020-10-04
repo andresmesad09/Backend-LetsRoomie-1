@@ -10,4 +10,5 @@ db(config.dbUrl);
 app.listen(config.port, () => {
     console.log(`Server listeng at ${config.host}:${config.port}`);
   });
-  
+
+module.exports = app;
