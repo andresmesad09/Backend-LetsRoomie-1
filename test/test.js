@@ -10,6 +10,17 @@ const db = require('../src/components/db/db');
 
 db(config.dbUrl);
 
+//Generate a random id to create a email.
+function makeid(length) {
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < length; i++ ) {
+     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
 
 describe('Users routes: ', () => {
   it('shouldn´t create an user', (done) => {
@@ -28,6 +39,26 @@ describe('Users routes: ', () => {
       .end(function (err, res) {
         console.log(res.body);
         expect(res).to.have.status(400);
+        done();
+      });
+  });
+
+  it('should create an user', (done) => {
+    chai
+      .request(server)
+      .post('/createUser')
+      .send({
+        email: `${makeid(6)}@test.com`,
+        password: 'unacontraseña',
+        phone: '+57 3002040948',
+        name: 'test data',
+        avatar: 'https://letsroomie.s3.us-east-2.amazonaws.com/defualtImage-1601429025283.png',
+        isHost: false,
+        about: 'this is a test'
+      })
+      .end(function (err, res) {
+        console.log(res.body);
+        expect(res).to.have.status(201);
         done();
       });
   });
@@ -221,6 +252,17 @@ describe("Favorites routes", () => {
       });
   });
 
+  it('shouldn´t get favorites because there is an invalid token', (done) => {
+    chai
+      .request(server)
+      .get('/fav')
+      .set('access-token', 'aasd8t23bjkasdgyasjh')
+      .end(function (err, res) {
+        expect(res).to.have.status(401);
+        done();
+      });
+  });
+
   it('shouldn´t get favorite by Id because there is no token ', (done) => {
     chai
       .request(server)
@@ -299,6 +341,28 @@ describe("Places routes", () => {
       .get('/placec/Bogotá')
       .end(function (err, res) {
         expect(res).to.have.status(200);
+        done();
+      });
+  });
+})
+
+describe("AWS routes", () => {
+  it('Shouldn´t attach a file in aws s3 - no file', (done) => {
+    chai
+      .request(server)
+      .post('/api/profile/avatarUpload')
+      .end(function (err, res) {
+        expect(res).to.have.status(500);
+        done();
+      });
+  });
+
+  it('Shouldn´t attach a file in aws s3 - no file', (done) => {
+    chai
+      .request(server)
+      .post('/api/profile/multipleUpload')
+      .end(function (err, res) {
+        expect(res).to.have.status(500);
         done();
       });
   });

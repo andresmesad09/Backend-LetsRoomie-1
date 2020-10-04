@@ -742,6 +742,40 @@
           }
         }
       }
+    },
+    "/fav/place/{placeId}": {
+      "get": {
+        "tags": [
+          "favorites"
+        ],
+        "summary": "Get favorites from a place",
+        "description": "Get all the favorites from a place passing the placeId in path",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "placeId",
+            "type": "string",
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "access-token",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/getPlaceFavorites"
+            }
+          },
+          "500": {
+            "description": "Unexpected error"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1502,6 +1536,34 @@
                 "type": "string"
               },
               "updatedAt": {
+                "type": "string"
+              },
+              "__v": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getPlaceFavorites": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "body": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string"
+              },
+              "place": {
+                "type": "object"
+              },
+              "user": {
                 "type": "string"
               },
               "__v": {

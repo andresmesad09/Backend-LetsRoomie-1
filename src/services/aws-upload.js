@@ -122,12 +122,12 @@ router.post('/multipleUpload', (req, res) => {
     // console.log('files', req.files);
     if (error) {
       console.log('errors', error);
-      res.json({error: error});
+      response.error(req, res, "Unexpected error", 500, error);
     } else {
       // If File not found
       if (req.files === undefined) {
         console.log('Error: No File Selected!');
-        res.json('Error: No File Selected');
+        response.error(req, res, "No files selected", 500, "No file selected");
       } else {
         // If Success
         let fileArray = req.files,
@@ -135,14 +135,8 @@ router.post('/multipleUpload', (req, res) => {
         const galleryImgLocationArray = [];
         for (let i = 0; i < fileArray.length; i++) {
           fileLocation = fileArray[i].location;
-          // console.log('filenm', fileLocation);
           galleryImgLocationArray.push(fileLocation);
         }
-        // Save the file name into database
-        // res.json({
-        //   // filesArray: fileArray,
-        //   locationArray: galleryImgLocationArray
-        // });
         console.log('[AWS] locations:' + galleryImgLocationArray)
         response.success(req, res, galleryImgLocationArray, 201);
       }
