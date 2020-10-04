@@ -8,7 +8,7 @@ const place = new Schema({
     city: { type: String, required: true },
     images: { type: Array, required: false },
     price: { type: Number, required: true },
-    avalaible: { type: Boolean, required: true },
+    available: { type: Boolean, required: true },
     furniture: { type: Array, required: true },
     wifi: { type: Boolean, required: true },
     bath: { type: Boolean, required: true },
