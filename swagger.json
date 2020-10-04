@@ -814,34 +814,34 @@
               "about": {
                 "type": "string"
               },
-              "i1": {
+              "movietheater": {
                 "type": "boolean"
               },
-              "i2": {
+              "literature": {
                 "type": "boolean"
               },
-              "i3": {
+              "sports": {
                 "type": "boolean"
               },
-              "i4": {
+              "parties": {
                 "type": "boolean"
               },
-              "i5": {
+              "study": {
                 "type": "boolean"
               },
-              "i6": {
+              "music": {
                 "type": "boolean"
               },
-              "i7": {
+              "friends": {
                 "type": "boolean"
               },
-              "i8": {
+              "travel": {
                 "type": "boolean"
               },
-              "i9": {
+              "art": {
                 "type": "boolean"
               },
-              "i10": {
+              "work": {
                 "type": "boolean"
               },
               "createdAt": {
@@ -879,34 +879,34 @@
         "about": {
           "type": "string"
         },
-        "i1": {
+        "movietheater": {
           "type": "boolean"
         },
-        "i2": {
+        "literature": {
           "type": "boolean"
         },
-        "i3": {
+        "sports": {
           "type": "boolean"
         },
-        "i4": {
+        "parties": {
           "type": "boolean"
         },
-        "i5": {
+        "study": {
           "type": "boolean"
         },
-        "i6": {
+        "music": {
           "type": "boolean"
         },
-        "i7": {
+        "friends": {
           "type": "boolean"
         },
-        "i8": {
+        "travel": {
           "type": "boolean"
         },
-        "i9": {
+        "art": {
           "type": "boolean"
         },
-        "i10": {
+        "work": {
           "type": "boolean"
         }
       }
@@ -946,34 +946,34 @@
               "about": {
                 "type": "string"
               },
-              "i1": {
+              "movietheater": {
                 "type": "boolean"
               },
-              "i2": {
+              "literature": {
                 "type": "boolean"
               },
-              "i3": {
+              "sports": {
                 "type": "boolean"
               },
-              "i4": {
+              "parties": {
                 "type": "boolean"
               },
-              "i5": {
+              "study": {
                 "type": "boolean"
               },
-              "i6": {
+              "music": {
                 "type": "boolean"
               },
-              "i7": {
+              "friends": {
                 "type": "boolean"
               },
-              "i8": {
+              "travel": {
                 "type": "boolean"
               },
-              "i9": {
+              "art": {
                 "type": "boolean"
               },
-              "i10": {
+              "work": {
                 "type": "boolean"
               }
             }
@@ -1036,34 +1036,34 @@
         "about": {
           "type": "string"
         },
-        "i1": {
+        "movietheater": {
           "type": "boolean"
         },
-        "i2": {
+        "literature": {
           "type": "boolean"
         },
-        "i3": {
+        "sports": {
           "type": "boolean"
         },
-        "i4": {
+        "parties": {
           "type": "boolean"
         },
-        "i5": {
+        "study": {
           "type": "boolean"
         },
-        "i6": {
+        "music": {
           "type": "boolean"
         },
-        "i7": {
+        "friends": {
           "type": "boolean"
         },
-        "i8": {
+        "travel": {
           "type": "boolean"
         },
-        "i9": {
+        "art": {
           "type": "boolean"
         },
-        "i10": {
+        "work": {
           "type": "boolean"
         },
         "createdAt": {
@@ -1110,34 +1110,34 @@
                 "about": {
                   "type": "string"
                 },
-                "i1": {
+                "movietheater": {
                   "type": "boolean"
                 },
-                "i2": {
+                "literature": {
                   "type": "boolean"
                 },
-                "i3": {
+                "sports": {
                   "type": "boolean"
                 },
-                "i4": {
+                "parties": {
                   "type": "boolean"
                 },
-                "i5": {
+                "study": {
                   "type": "boolean"
                 },
-                "i6": {
+                "music": {
                   "type": "boolean"
                 },
-                "i7": {
+                "friends": {
                   "type": "boolean"
                 },
-                "i8": {
+                "travel": {
                   "type": "boolean"
                 },
-                "i9": {
+                "art": {
                   "type": "boolean"
                 },
-                "i10": {
+                "work": {
                   "type": "boolean"
                 },
                 "createdAt": {
@@ -1208,34 +1208,34 @@
                 "about": {
                   "type": "string"
                 },
-                "i1": {
+                "movietheater": {
                   "type": "boolean"
                 },
-                "i2": {
+                "literature": {
                   "type": "boolean"
                 },
-                "i3": {
+                "sports": {
                   "type": "boolean"
                 },
-                "i4": {
+                "parties": {
                   "type": "boolean"
                 },
-                "i5": {
+                "study": {
                   "type": "boolean"
                 },
-                "i6": {
+                "music": {
                   "type": "boolean"
                 },
-                "i7": {
+                "friends": {
                   "type": "boolean"
                 },
-                "i8": {
+                "travel": {
                   "type": "boolean"
                 },
-                "i9": {
+                "art": {
                   "type": "boolean"
                 },
-                "i10": {
+                "work": {
                   "type": "boolean"
                 },
                 "createdAt": {
