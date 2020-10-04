@@ -9,7 +9,7 @@ We are Castor´s Dams. A group of Plazti Master´ students from Colombia and Mex
 Member  | GitHub Profile | Country
 ------------- | ------------- | ---------------
 Juan Espitia  | [Regniek](https://github.com/Regniek) | Colombia
-Andres Mesa  | [andresmesad09](https://github.com/andresmesad09) | Colomba
+Andres Mesa  | [andresmesad09](https://github.com/andresmesad09) | Colombia
 
 ## Backend Stack
 Resource  | Objective
@@ -26,11 +26,22 @@ AWS S3 | Manage static files
 
 You cand find the documentation of the routes [here](https://api-letsroomie.herokuapp.com/api-docs/)
 
-## Install
-`npm install`
-
-## Usage in development
-`npm run dev`
+[](https://letsroomie.s3.us-east-2.amazonaws.com/apiDocs-1601835682202.png)
 
 ## Contributing
-If you want to contribute, we encourage you to fork this project and send the pull request to the dev branch. We will be checking as soon as possible.
+After clone this project: 
+
+###  Install
+`npm install`
+
+### Usage in development
+`npm run dev`
+
+### Testing
+`npm run coverage`
+
+This test script create a couple of folders and in coverage/lcov-report-index you can find the coverage report as shown below:
+
+[](https://letsroomie.s3.us-east-2.amazonaws.com/coverageReport-1601835805788.png)
+
+Finally, you can send your pull request to dev branch. 
