@@ -11,7 +11,7 @@ placeController.getPlaces= async (req, res, next) => {
   }
 }
 
-placeController.getPlacesAvalaible= async (req, res, next) => {
+placeController.getPlacesAvailable= async (req, res, next) => {
   try {
     const places = await Place.find({available:true}).populate('user');
     response.success(req, res, places, 200);

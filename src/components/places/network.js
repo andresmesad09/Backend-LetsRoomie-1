@@ -4,7 +4,7 @@ const place = require('./controller')
 const auth =  require('../middleware/auth')
 
 router.get('/place', place.getPlaces)
-router.get('/placea', place.getPlacesAvalaible)
+router.get('/placea', place.getPlacesAvailable)
 router.post('/place', auth, place.addPlace)
 router.get('/place/:id', place.getOnePlace)
 router.get('/placec/:city', place.getOnePlaceCity)
