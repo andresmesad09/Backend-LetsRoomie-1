@@ -2,6 +2,11 @@ const Place = require('./model');
 const placeController = {};
 const response = require('../../network/response');
 
+function capitalize(word) {
+  const loweredCase = word.toLowerCase();
+  return word[0].toUpperCase() + loweredCase.slice(1);
+}
+
 placeController.getPlaces= async (req, res, next) => {
   try {
     const places = await Place.find().populate('user');
@@ -32,7 +37,8 @@ placeController.getOnePlace = async (req, res,next) =>{
 }
 placeController.getOnePlaceCity = async (req, res,next) =>{
   try {
-    const place = await Place.find({city:req.params.city}).populate('user');
+    const city = capitalize(req.params.city);
+    const place = await Place.find({city: city}).populate('user');
     response.success(req, res, place, 200);
   } catch (error) {
     next(error)
