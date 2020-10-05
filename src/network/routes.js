@@ -2,6 +2,7 @@ const auth = require('../components/auth/network');
 const place = require('../components/places/network');
 const upload = require('../services/aws-upload');
 const favorites = require('../components/favorites/network');
+const cors = require('cors');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDoc = require('../../swagger.json');
@@ -9,7 +10,7 @@ const swaggerDoc = require('../../swagger.json');
 const routes = function(app) {
     app.use('/', auth)
     app.use('/', place)
-    app.use('/api/profile', upload)
+    app.use('/api/profile', cors(), upload)
     app.use('/', favorites)
     // Config swagger
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
